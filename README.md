@@ -13,16 +13,6 @@ A from-scratch visual redesign concept for the HIMA Benelux website (himabenelux
 - `inloggen.html` — Sign in / register
 - `tier-quiz.html` — "Which membership tier fits you?" quiz
 
-## Viewing locally
-
-Open `index.html` directly in a browser, or serve the folder with any static file server, e.g.:
-
-```bash
-python3 -m http.server 8000
-```
-
-Then visit `http://localhost:8000`.
-
-## Stack
+##Stack
 
 No build step, no framework — plain HTML, CSS custom properties, and vanilla JS (IntersectionObserver for scroll reveals, a small quiz state machine, CSS `:has()` for the mobile nav toggle).
