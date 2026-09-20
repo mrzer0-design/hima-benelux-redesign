@@ -1,0 +1,713 @@
+<!doctype html>
+<title>After Summer BBQ met Pascal Coppens — HIMA Benelux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#dcf1f4;
+    --sky-soft:#eef8f9;
+    --paper:#ffffff;
+    --ink:#132c31;
+    --ink-soft:#3d565b;
+    --line:#cfe6e9;
+    --teal:#0e8a9c;
+    --teal-deep:#0a6c7b;
+    --teal-wash:#e4f4f6;
+    --cta:#00afcd;
+    --cta-deep:#07a0b8;
+    --cta-wash:#e3f7fa;
+    --cta-line:#9fdfea;
+    --cta-btn:#008098;
+    --cta-btn-hover:#006f86;
+    --focus:#0e8a9c;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  body{
+    overflow-x:hidden;
+    margin:0;
+    background-color:#ffffff;
+    background-image:
+      radial-gradient(130% 55% at 50% -8%, #dcf1f4 0%, transparent 60%),
+      radial-gradient(80% 40% at 90% 15%, rgb(14 138 156 / .14), transparent 65%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding-inline:20px;
+  }
+  .wrap{max-width:1220px;margin-inline:auto;}
+  h1,h2,h3{
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .mono{font-family:"Manrope", ui-sans-serif, system-ui, sans-serif; font-variant-numeric:tabular-nums;}
+
+  ::selection{background:var(--teal-wash); color:var(--ink);}
+  ::-webkit-scrollbar{width:12px; height:12px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:color-mix(in srgb, var(--teal) 45%, transparent); border-radius:8px; border:3px solid var(--paper);}
+  ::-webkit-scrollbar-thumb:hover{background:var(--teal);}
+
+  a.skip-link{
+    position:absolute; left:-999px; top:auto;
+    background:var(--teal-deep); color:#fff; padding:.7em 1.1em; z-index:1000; border-radius:0 0 6px 0;
+  }
+  a.skip-link:focus{left:0; top:0;}
+
+  :focus-visible{outline:2.5px solid var(--focus); outline-offset:3px; border-radius:2px;}
+
+  @keyframes rise{from{opacity:.001; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .hero h1, .hero-lede, .hero-art{animation:rise .6s cubic-bezier(.16,1,.3,1) both;}
+  .hero-lede{animation-delay:.08s;}
+  .hero-art{animation-delay:.1s;}
+
+  .reveal, .reveal-stagger > *{
+    opacity:0; transform:translateY(16px);
+    transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.is-visible, .reveal-stagger > *.is-visible{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *:nth-child(1){transition-delay:0s;}
+  .reveal-stagger > *:nth-child(2){transition-delay:.05s;}
+  .reveal-stagger > *:nth-child(3){transition-delay:.1s;}
+  .reveal-stagger > *:nth-child(4){transition-delay:.15s;}
+  .reveal-stagger > *:nth-child(5){transition-delay:.2s;}
+  .no-js .reveal, .no-js .reveal-stagger > *{opacity:1; transform:none;}
+
+  .concept-banner{
+    background:var(--teal-wash); color:var(--ink-soft); text-align:center; border-bottom:1px solid var(--line);
+    font-size:.78rem; letter-spacing:.04em; padding:.55rem 1rem;
+    margin-inline:-20px; padding-inline:20px;
+  }
+  .concept-banner b{color:var(--teal-deep);}
+
+  /* floating glass pill nav — identical to the rest of the site */
+  .nav-wrap{position:fixed; top:52px; left:0; right:0; z-index:200; display:flex; flex-direction:column; align-items:center; gap:.6rem; padding-inline:20px; pointer-events:none;}
+  .pill-nav{
+    pointer-events:auto; width:100%; max-width:1220px;
+    display:flex; align-items:center; justify-content:space-between; gap:1.6rem;
+    padding:.5rem .6rem .5rem 1rem; border-radius:999px;
+    background:rgba(255,255,255,.68); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 1px 1px rgb(19 44 49 / .04), 0 14px 32px -14px rgb(19 44 49 / .22);
+    transition:box-shadow .2s ease;
+  }
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none; flex:none;}
+  .brand-mark{width:40px;height:40px;border-radius:50%; background:var(--teal); display:flex; align-items:center; justify-content:center; flex:none; box-shadow:0 4px 12px -5px rgb(14 60 68 / .4);}
+  .brand-mark svg{width:22px;height:22px;}
+  .brand-word{font-size:.72rem; line-height:1.34; font-weight:800; letter-spacing:.01em; color:var(--ink); text-transform:uppercase;}
+  .brand-word .tag{display:block; margin-top:.22rem; font-weight:700; font-size:.7rem; letter-spacing:.13em; color:var(--teal-deep);}
+
+  .nav-links{display:flex; align-items:center; gap:1.7rem; list-style:none; margin:0; padding:0; font-size:.88rem; font-weight:500;}
+  .nav-links a{text-decoration:none; position:relative; padding-block:.3rem;}
+  .nav-links a::after{content:"";position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--teal); transform:scaleX(0); transform-origin:left; transition:transform .2s ease;}
+  .nav-links a:hover::after{transform:scaleX(1);}
+  .nav-links a[aria-current="page"]{color:var(--teal-deep); font-weight:600;}
+  .nav-links a[aria-current="page"]::after{transform:scaleX(1);}
+  .nav-actions{display:flex; align-items:center; gap:1.1rem; flex:none;}
+  .nav-lang{display:flex; align-items:center; gap:.3rem; font-size:.78rem; color:var(--ink-soft);}
+  .nav-lang a{text-decoration:none; transition:color .15s ease;}
+  .nav-lang a:hover{color:var(--teal);}
+  .nav-lang a[aria-current="true"]{color:var(--ink); font-weight:600;}
+  .nav-lang span{opacity:.4;}
+  .nav-login{font-size:.85rem; font-weight:600; text-decoration:none; color:var(--ink-soft); transition:color .15s ease; white-space:nowrap;}
+  .nav-login:hover{color:var(--teal-deep);}
+
+  .nav-toggle-input{position:absolute; opacity:0; pointer-events:none;}
+  .nav-toggle-btn{display:none; flex:none; width:36px; height:36px; border-radius:50%; align-items:center; justify-content:center; gap:4px; flex-direction:column; cursor:pointer; background:transparent; border:1px solid var(--line);}
+  .nav-toggle-btn span{display:block; width:15px; height:2px; background:var(--ink); border-radius:2px; transition:transform .2s ease, opacity .2s ease;}
+  .mobile-panel{
+    pointer-events:auto; display:none; flex-direction:column; gap:.2rem;
+    width:100%; max-width:340px; padding:.9rem 1.1rem; border-radius:20px;
+    background:rgba(255,255,255,.85); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+    border:1px solid rgba(255,255,255,.6); box-shadow:0 14px 32px -14px rgb(19 44 49 / .25);
+  }
+  .mobile-panel a{text-decoration:none; padding:.6rem .3rem; font-size:.95rem; font-weight:500; border-bottom:1px solid var(--line);}
+  .mobile-panel a:last-child{border-bottom:none;}
+  .nav-wrap:has(.nav-toggle-input:checked) .mobile-panel{display:flex;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(2){opacity:0;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  /* button system — reused verbatim */
+  .btn{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:"Manrope", sans-serif; font-weight:700; font-size:.9rem;
+    padding:.75rem 1.35rem; border-radius:999px; text-decoration:none; border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+    cursor:pointer; white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px) scale(.99);}
+  .btn-cta{background:var(--cta-btn); color:#fff; box-shadow:0 8px 20px -8px rgb(0 128 152 / .4);}
+  .btn-cta:hover{background:var(--cta-btn-hover); box-shadow:0 10px 22px -8px rgb(0 128 152 / .45);}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .btn-lg{padding:.95rem 2rem; font-size:1rem;}
+  .link-arrow{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; font-weight:600; color:var(--teal-deep); border-bottom:1px solid transparent; transition:border-color .15s ease, gap .15s ease;}
+  .link-arrow:hover{border-color:var(--teal-deep); gap:.6rem;}
+
+  main{padding-top:6.4rem;}
+
+  /* utility row — back link + share, above the hero */
+  .util-row{display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding-block:1.6rem .4rem; flex-wrap:wrap;}
+  .back-link{display:inline-flex; align-items:center; gap:.5rem; text-decoration:none; font-size:.9rem; font-weight:600; color:var(--ink-soft); transition:color .15s ease;}
+  .back-link:hover{color:var(--teal-deep);}
+  .share-row{display:flex; align-items:center; gap:.6rem;}
+  .share-label{font-size:.82rem; color:var(--ink-soft); margin-right:.2rem;}
+  .share-btn{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:#ffffff;
+    display:inline-flex; align-items:center; justify-content:center; color:var(--ink-soft);
+    transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .share-btn:hover{border-color:var(--teal); color:var(--teal-deep); transform:translateY(-1px);}
+  .share-btn svg{width:15px; height:15px;}
+
+  /* hero — same split pattern as the homepage: title + lede, plus the network-graphic panel */
+  .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:3rem; align-items:center; padding-block:1.2rem 2.6rem;}
+  .hero-eyebrow{display:flex; align-items:center; gap:.8rem; margin-bottom:1rem;}
+  .hero h1{font-size:clamp(1.8rem, 2.2vw + 1rem, 2.6rem); line-height:1.14;}
+  .hero-lede{max-width:44ch; margin-top:1.1rem; color:var(--ink-soft); font-size:1.04rem;}
+  .hero-cta{margin-top:1.6rem;}
+  .hero-art{position:relative;}
+  .hero-art .glow{position:absolute; top:-14%; right:-12%; width:60%; aspect-ratio:1/1; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--cta), var(--teal) 65%, transparent 78%); filter:blur(46px); opacity:.3; z-index:0; pointer-events:none;}
+  .hero-art .panel{position:relative; aspect-ratio:1/1; border-radius:10px; overflow:hidden; border:1px solid var(--line);}
+  .hero-art .hero-photo{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .hero-art .hero-photo-scrim{position:absolute; inset:0; background:linear-gradient(0deg, rgb(10 30 33 / .58) 0%, rgb(10 30 33 / .05) 40%, transparent 65%);}
+  .hero-art figcaption{position:absolute; left:1.3rem; bottom:1.2rem; right:1.3rem; color:#f2fbfc; font-family:"Manrope", sans-serif; font-size:.72rem; letter-spacing:.03em; opacity:.95;}
+
+  .date-badge{
+    flex:none; width:60px; display:flex; flex-direction:column; align-items:center;
+    border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#ffffff;
+    box-shadow:0 4px 10px -6px rgb(14 60 68 / .25);
+  }
+  .date-badge .badge-month{
+    width:100%; text-align:center; padding:.22rem 0; background:var(--teal-deep); color:#fff;
+    font-family:"Manrope", sans-serif; font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; font-weight:600;
+  }
+  .date-badge .badge-day{font-family:"Manrope", sans-serif; font-size:1.5rem; font-weight:700; color:var(--ink); line-height:1.15; padding-top:.28rem;}
+  .date-badge .badge-year{font-size:.7rem; color:var(--ink-soft); padding-bottom:.32rem; letter-spacing:.02em;}
+
+  section{padding-top:2.6rem; padding-bottom:2.6rem;}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; margin-bottom:1.8rem; flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(1.35rem, .8vw + 1.1rem, 1.7rem);}
+  .section-head .sub{color:var(--ink-soft); max-width:60ch; margin-top:.4rem;}
+
+  /* compact facts card — the whole point: everything you need to decide, in one place */
+  .detail-layout{display:grid; grid-template-columns:1fr 300px; gap:2.6rem; align-items:start; border-top:1px solid var(--line); padding-top:2.6rem;}
+  .detail-main{display:flex; flex-direction:column; min-width:0;}
+  .facts-sidebar{position:sticky; top:9.5rem;}
+  .facts-card{
+    display:flex; flex-direction:column; gap:1.2rem;
+    padding:1.4rem 1.5rem; border:1px solid var(--line); border-radius:16px;
+    background:linear-gradient(160deg, #ffffff 0%, var(--sky-soft) 60%, var(--teal-wash) 100%);
+  }
+  .fact-grid{display:flex; flex-direction:column; gap:1.05rem;}
+  .fact{display:flex; align-items:flex-start; gap:.65rem;}
+  .fact svg{flex:none; width:17px; height:17px; color:var(--teal-deep); margin-top:.15rem;}
+  .fact-label{display:block; font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-bottom:.2rem;}
+  .fact-value{font-size:.85rem; color:var(--ink); line-height:1.4;}
+  .price-tiers{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.3rem;}
+  .price-tiers li{display:flex; flex-direction:column; gap:.1rem; font-size:.83rem; color:var(--ink);}
+  .price-tiers li strong{font-weight:700;}
+  .price-tiers .tier-label{display:inline-flex; align-items:center; gap:.4rem;}
+  .tag-pill{
+    display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.02em;
+    color:var(--teal-deep); background:var(--teal-wash); border:1px solid var(--cta-line);
+    border-radius:999px; padding:.12rem .5rem; line-height:1.5; white-space:nowrap;
+  }
+  .fact-note{display:block; margin-top:.25rem; font-size:.78rem; color:var(--ink-soft);}
+  .facts-actions{display:flex; flex-direction:column; align-items:stretch; gap:.7rem; border-top:1px solid var(--line); padding-top:1.2rem;}
+  .facts-actions .btn{justify-content:center;}
+
+  /* agenda */
+  .agenda-section{padding-top:0;}
+  .agenda-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
+  .agenda-row{display:flex; gap:1.4rem; padding-top:.85rem; padding-bottom:.85rem; border-bottom:1px solid var(--line); align-items:baseline;}
+  .agenda-row:last-child{border-bottom:none;}
+  .agenda-time{flex:none; width:9rem; font-size:.86rem; color:var(--teal-deep); font-weight:600;}
+  .agenda-item{font-size:.94rem; color:var(--ink);}
+
+  /* description */
+  .description-section{border-top:1px solid var(--line);}
+  .description-text{display:flex; flex-direction:column; gap:1.1rem; max-width:70ch;}
+  .description-text p{color:var(--ink-soft); font-size:.98rem; line-height:1.75;}
+  .description-text p strong{color:var(--ink);}
+
+  /* extra info — a downloadable attachment card */
+  .extra-section{border-top:1px solid var(--line);}
+  .attachment-card{
+    display:flex; align-items:center; gap:1rem; max-width:26rem;
+    padding:1.1rem 1.3rem; border:1px solid var(--line); border-radius:14px; background:#ffffff;
+    text-decoration:none; transition:border-color .15s ease, transform .15s ease;
+  }
+  .attachment-card:hover{border-color:var(--teal); transform:translateY(-2px);}
+  .attachment-icon{flex:none; width:42px; height:42px; border-radius:10px; background:var(--teal-wash); color:var(--teal-deep); display:flex; align-items:center; justify-content:center;}
+  .attachment-icon svg{width:20px; height:20px;}
+  .attachment-name{font-weight:600; font-size:.94rem; color:var(--ink);}
+  .attachment-meta{font-size:.78rem; color:var(--ink-soft); margin-top:.15rem;}
+
+  /* attending members */
+  /* faq */
+  .faq-section{border-top:1px solid var(--line);}
+  .faq-list{display:flex; flex-direction:column; max-width:70ch;}
+  .faq-item{border-bottom:1px solid var(--line); padding-top:1.1rem; padding-bottom:1.1rem;}
+  .faq-item:first-child{padding-top:0;}
+  .faq-item summary{
+    display:flex; align-items:center; justify-content:space-between; gap:1.2rem;
+    font-weight:700; font-size:.98rem; color:var(--ink); cursor:pointer; list-style:none;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .chev{flex:none; width:20px; height:20px; color:var(--teal-deep); transition:transform .2s ease;}
+  .faq-item[open] summary .chev{transform:rotate(180deg);}
+  .faq-item .faq-answer{margin-top:.7rem; max-width:62ch; color:var(--ink-soft); font-size:.95rem; line-height:1.7;}
+
+  .attendees-section{border-top:1px solid var(--line);}
+  .attendee-row{display:flex; flex-wrap:wrap; gap:.7rem;}
+  .attendee-chip{
+    padding:.55rem 1rem; border:1px solid var(--line); border-radius:999px; background:#ffffff;
+    font-size:.86rem; color:var(--ink); display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .attendee-chip .dot{width:6px; height:6px; border-radius:50%; background:var(--teal); flex:none;}
+  .attendee-more{padding:.55rem 1rem; font-size:.86rem; color:var(--ink-soft); font-style:normal;}
+
+  /* cta band — reused verbatim */
+  .cta-band-outer{position:relative; padding-block:1.4rem;}
+  .cta-band-outer .orb{
+    position:absolute; top:-60px; right:-40px; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, var(--cta), var(--teal) 60%, transparent 76%);
+    filter:blur(55px); opacity:.32; z-index:0; pointer-events:none;
+    animation:orbdrift 18s ease-in-out infinite alternate;
+  }
+  @keyframes orbdrift{from{transform:translate(0,0) scale(1);} to{transform:translate(-18px,16px) scale(1.1);}}
+  .cta-band{
+    position:relative; z-index:1; border-radius:12px; overflow:hidden; padding:3.4rem 3rem; isolation:isolate;
+    border:1px solid rgba(255,255,255,.14);
+    background:
+      radial-gradient(65% 130% at 100% 0%, rgb(0 175 205 / .35) 0%, transparent 60%),
+      radial-gradient(55% 110% at 0% 100%, rgb(14 138 156 / .3) 0%, transparent 55%),
+      linear-gradient(115deg, #0e2a2d, var(--ink) 55%, #0c2528);
+  }
+  .cta-band .content{position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:2.5rem; flex-wrap:wrap;}
+  .cta-band .copy{flex:1 1 0;}
+  .cta-band h2{color:#f2fbfc; font-size:clamp(1.6rem, 1.3vw + 1.2rem, 2.2rem); line-height:1.15;}
+  .cta-band .lede{margin-top:.8rem; color:rgb(242 251 252 / .78); font-size:1rem; max-width:44ch;}
+  .cta-band .action{flex:1 1 0; display:flex; flex-direction:column; align-items:flex-start; gap:.6rem;}
+  .cta-band .hint{font-size:.78rem; color:rgb(242 251 252 / .6);}
+
+  /* footer — reused verbatim */
+  footer{
+    background:linear-gradient(175deg, var(--teal-wash) 0%, var(--sky) 100%);
+    color:var(--ink); margin-top:1.5rem; border-radius:10px 10px 0 0; border:1px solid var(--line); border-bottom:none;
+  }
+  .footer-in{padding:3rem 2.6rem 1.8rem; display:grid; grid-template-columns:1.3fr 1fr 1.3fr; gap:3rem;}
+  footer p{color:var(--ink-soft); font-size:.9rem; margin-top:1rem; max-width:34ch;}
+  footer h3{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:1rem; font-weight:700;}
+  footer .flinks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.65rem; font-size:.92rem;}
+  footer .flinks a{text-decoration:none; color:var(--ink); transition:color .15s ease;}
+  footer .flinks a:hover{color:var(--teal-deep);}
+  .newsletter-form{display:flex; flex-direction:column; gap:.7rem; margin-top:.9rem;}
+  .field{display:flex; flex-direction:column; gap:.3rem;}
+  .field label{font-size:.72rem; letter-spacing:.04em; color:var(--ink-soft);}
+  .field input{
+    background:#ffffff; border:1px solid var(--line);
+    border-radius:5px; padding:.7rem .8rem; color:var(--ink); font-family:"Manrope", sans-serif; font-size:.92rem;
+  }
+  .field input::placeholder{color:color-mix(in srgb, var(--ink-soft) 70%, transparent);}
+  .field input:focus{border-color:var(--teal-deep);}
+  .newsletter-form .btn-solid{background:var(--teal-deep); color:#fff; margin-top:.3rem; justify-content:center;}
+  .newsletter-form .btn-solid:hover{background:#085a66;}
+  .legal-bar{border-top:1px solid var(--line); padding:1.1rem 2.6rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.8rem; color:var(--ink-soft);}
+  .legal-bar a{text-decoration:none; color:inherit; margin-right:1.2rem;}
+  .legal-bar a:hover{color:var(--teal-deep);}
+  .legal-bar .social{display:inline-flex; align-items:center; gap:1rem;}
+  .legal-bar .social a{margin-right:0;}
+
+  @media (max-width:880px){
+    .nav-links, .nav-lang, .nav-login{display:none;}
+    .nav-toggle-btn{display:flex;}
+    main{padding-top:5.6rem;}
+    .hero{grid-template-columns:1fr; padding-block:.6rem 1.6rem;}
+    .hero-art{order:-1; aspect-ratio:16/9;}
+    .detail-layout{grid-template-columns:1fr; gap:1.8rem;}
+    .facts-sidebar{position:static; top:auto; order:-1;}
+    .footer-in{grid-template-columns:1fr; gap:2.2rem;}
+    .cta-band .content{flex-direction:column; align-items:flex-start;}
+    .cta-band .action{width:100%;}
+  }
+  @media (max-width:480px){
+    .brand-word{display:none;}
+    .facts-card{padding:1.5rem 1.4rem;}
+    .cta-band{padding:2.4rem 1.6rem;}
+    .agenda-time{width:6.4rem;}
+  }
+</style>
+
+<a class="skip-link" href="#main">Ga naar inhoud</a>
+<div class="concept-banner">Redesign-concept voor <b>HIMA Benelux</b> — niet de officiële website</div>
+
+<div class="nav-wrap">
+  <nav class="pill-nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+          <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+        </svg>
+      </span>
+      <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#doelstellingen">HIMA Benelux</a></li>
+      <li><a href="evenementen.html" aria-current="page">Evenementen</a></li>
+      <li><a href="index.html#leden">Leden</a></li>
+      <li><a href="lid-worden.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="nav-lang"><a href="#" aria-current="true">NL</a><span>·</span><a href="#">FR</a><span>·</span><a href="#">EN</a></span>
+      <a class="nav-login" href="inloggen.html">Inloggen</a>
+      <a class="btn btn-cta btn-sm" href="lid-worden.html">Word lid</a>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <label for="nav-toggle" class="nav-toggle-btn" aria-label="Menu openen"><span></span><span></span><span></span></label>
+  </nav>
+  <div class="mobile-panel">
+    <a href="index.html">Home</a>
+    <a href="index.html#doelstellingen">HIMA Benelux</a>
+    <a href="evenementen.html">Evenementen</a>
+    <a href="index.html#leden">Leden</a>
+    <a href="lid-worden.html#contact">Contact</a>
+    <a href="inloggen.html">Inloggen</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap">
+    <div class="util-row">
+      <a class="back-link" href="evenementen.html"><span aria-hidden="true">←</span> Terug naar overzicht</a>
+      <div class="share-row">
+        <span class="share-label">Deel deze pagina</span>
+        <a class="share-btn" id="share-fb" href="#" target="_blank" rel="noopener noreferrer" aria-label="Deel op Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.4c0-.9.2-1.5 1.5-1.5H16.5V4.2C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.5-4 4.1v2.4H7.5v3H10V21h3.5Z"/></svg>
+        </a>
+        <a class="share-btn" id="share-li" href="#" target="_blank" rel="noopener noreferrer" aria-label="Deel op LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.9 8.6H3.7V20H6.9V8.6ZM5.3 3.7A1.9 1.9 0 1 0 5.3 7.5 1.9 1.9 0 0 0 5.3 3.7ZM20.3 20H17.1v-5.8c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.9H9.8V8.6H12.9v1.6h.05c.4-.8 1.5-1.6 3.1-1.6 3.3 0 3.9 2.2 3.9 5V20Z"/></svg>
+        </a>
+        <a class="share-btn" id="share-wa" href="#" target="_blank" rel="noopener noreferrer" aria-label="Deel via WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.3A9 9 0 1 0 12 3Zm4.9 12.5c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9 1-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.5.5-.2.2-.4.4-.2.7.2.3.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.7-.1.3.1 2 .9 2.3 1.1.3.2.5.2.6.4.1.2.1.9-.1 1.4Z"/></svg>
+        </a>
+        <a class="share-btn" id="share-mail" href="#" aria-label="Deel via e-mail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="hero-eyebrow">
+          <div class="date-badge"><span class="badge-month">Sep</span><span class="badge-day">24</span><span class="badge-year">2026</span></div>
+        </div>
+        <h1>After Summer BBQ met Pascal Coppens</h1>
+        <p class="hero-lede">Donderdag 24 september 2026 · 17u00 – 22u00 · link21, Herentals. Een avond over CO₂-rapportering in de DIY-sector, een keynote van China-expert Pascal Coppens, en een gezellige netwerk-BBQ.</p>
+        <a class="btn btn-cta btn-lg hero-cta" href="#">Schrijf je nu in</a>
+      </div>
+      <div class="hero-art">
+        <div class="glow" aria-hidden="true"></div>
+        <figure class="panel">
+          <img class="hero-photo" src="assets/coppens-event.png" alt="Netwerk-BBQ bij zonsondergang op een dakterras met zicht op Antwerpen">
+          <div class="hero-photo-scrim" aria-hidden="true"></div>
+          <figcaption>After Summer BBQ · 24 september 2026</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <div class="detail-layout">
+      <div class="detail-main">
+        <section class="agenda-section">
+          <div class="section-head reveal">
+            <div>
+              <h2>Agenda</h2>
+            </div>
+          </div>
+          <ul class="agenda-list reveal">
+            <li class="agenda-row"><span class="agenda-time mono">16:30 – 17:00</span><span class="agenda-item">Welcome Drinks</span></li>
+            <li class="agenda-row"><span class="agenda-time mono">17:00 – 17:10</span><span class="agenda-item">Opening</span></li>
+            <li class="agenda-row"><span class="agenda-time mono">17:10 – 17:50</span><span class="agenda-item">"Make it Zero" initiatief door Maarten Ramp (Maxeda DIY Group) &amp; Oliver Bleeker (WSP)</span></li>
+            <li class="agenda-row"><span class="agenda-time mono">17:50 – 18:30</span><span class="agenda-item">Europese standaardisatie van CO₂-rapporteringen door Raphaël Ghaye (GS1), met Q&amp;A</span></li>
+            <li class="agenda-row"><span class="agenda-time mono">18:30 – 18:45</span><span class="agenda-item">Pauze</span></li>
+            <li class="agenda-row"><span class="agenda-time mono">18:45 – 19:30</span><span class="agenda-item">Keynote "China's Next Miracle" — Pascal Coppens</span></li>
+            <li class="agenda-row"><span class="agenda-time mono">19:30 – 21:30</span><span class="agenda-item">After Summer BBQ</span></li>
+          </ul>
+        </section>
+
+        <section class="description-section">
+          <div class="section-head reveal">
+            <div>
+              <h2>Over dit event</h2>
+            </div>
+          </div>
+          <div class="description-text reveal">
+            <p>Tijdens de After Summer BBQ 2026 staat <strong>"Make it Zero"</strong>, het sectorinitiatief van EDRA/GHIN en HIMA Network, centraal. In een toegankelijke uiteenzetting op maat van kmo's krijgt u heldere inzichten en concrete tips over hoe Make it Zero u kan helpen om uw CO₂-rapportering efficiënter aan te pakken.</p>
+            <p>Maarten Ramp, Director Quality, Product Compliance &amp; ESG bij Maxeda DIY Group, en Oliver Bleeker van WSP (voorheen Ricardo plc), consultant van het project "Make it Zero", geven een praktijkgerichte toelichting met direct toepasbare handvatten voor kmo's.</p>
+            <p>Vanuit GS1 toont Raphaël Ghaye hoe verregaande Europese standaardisatie van CO₂-rapporteringen bedrijven kan ondersteunen binnen ditzelfde project. Daarnaast delen zij een update rond DDP en PPWR en lichten zij de mogelijkheden binnen de GS1-databank toe.</p>
+            <p>De avond wordt afgesloten met een keynote van <strong>Pascal Coppens</strong> over zijn nieuwste boek "China's Next Miracle", waarin de China-expert onthult hoe deze verschuivingen sectoren, businessmodellen en geopolitiek hertekenen. Met pragmatische, doelgerichte strategieën (van industriële ecosystemen en baanbrekende technologieën tot klantgerichte innovatie en nieuwe werkculturen) zet China vertrouwde modellen op hun kop en bepaalt het nieuwe standaarden die anderen moeten volgen.</p>
+            <p>Aansluitend nodigen we u uit voor een gezellige netwerkavond met lekker eten en drank, waar u in een ontspannen sfeer kan napraten en nieuwe contacten leggen.</p>
+          </div>
+        </section>
+
+        <section class="extra-section">
+          <div class="section-head reveal">
+            <div>
+              <h2>Extra info</h2>
+              <p class="sub">Het volledige programma met sprekersbio's, om na te lezen of door te sturen.</p>
+            </div>
+          </div>
+          <a class="attachment-card reveal" href="#">
+            <span class="attachment-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+            </span>
+            <span>
+              <span class="attachment-name">Programma en sprekers, After Summer BBQ 2026.pdf</span>
+              <span class="attachment-meta">PDF · 1,2 MB</span>
+            </span>
+          </a>
+        </section>
+
+        <section class="faq-section">
+          <div class="section-head reveal">
+            <div>
+              <h2>Veelgestelde vragen</h2>
+            </div>
+          </div>
+          <div class="faq-list reveal">
+            <details class="faq-item" open>
+              <summary>Wat levert dit event mijn bedrijf op?
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="faq-answer">Concrete inzichten in het Make it Zero-initiatief en de Europese standaardisatie van CO₂-rapporteringen, direct toepasbaar op uw eigen kmo. Daarnaast een avond netwerken met vakgenoten uit de DIY-, tuin- en homeimprovementsector.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Hoe verloopt uw inschrijving?
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="faq-answer">Klik op "Schrijf mij in", vul uw gegevens en het aantal deelnemers in en bevestig. U ontvangt meteen een bevestigingsmail met alle praktische details; de factuur volgt na het event.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Ik wil extra deelnemers meenemen, kan dat?
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="faq-answer">Zeker. Vanaf 3 personen uit dezelfde organisatie geldt automatisch het voordelige Leden Teampakket-tarief. Geef bij de inschrijving gewoon het totale aantal deelnemers op.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Een extra deelnemer die ik inschreef kan niet komen, wat moet ik doen?
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="faq-answer">Geen probleem, naamswijzigingen zijn kosteloos. Laat ons tot 19 september weten wie de plaats inneemt, en we passen de inschrijving voor u aan.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Ik moet alsnog annuleren, wat moet ik doen?
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <p class="faq-answer">Meld uw annulering zo snel mogelijk. Tot en met 19 september is dit kosteloos; nadien of bij no-show wordt €199 per persoon aangerekend.</p>
+            </details>
+          </div>
+        </section>
+
+        <section class="attendees-section" id="aanwezigen">
+          <div class="section-head reveal">
+            <div>
+              <h2>Aanwezige leden</h2>
+              <p class="sub">41 aanmeldingen tot nu toe.</p>
+            </div>
+          </div>
+          <div class="attendee-row reveal-stagger">
+            <span class="attendee-chip"><span class="dot"></span>Eltra nv</span>
+            <span class="attendee-chip"><span class="dot"></span>TEC7-Novatech International</span>
+            <span class="attendee-chip"><span class="dot"></span>All Fields</span>
+            <span class="attendee-chip"><span class="dot"></span>Garden Trade International (GTI)</span>
+            <span class="attendee-chip"><span class="dot"></span>Laseto</span>
+            <span class="attendee-chip"><span class="dot"></span>Galico N.V.</span>
+            <span class="attendee-chip"><span class="dot"></span>Coeck</span>
+            <span class="attendee-chip"><span class="dot"></span>PGZ Retail Concept</span>
+            <span class="attendee-chip"><span class="dot"></span>Calodar</span>
+            <span class="attendee-chip"><span class="dot"></span>Pelsis Belgium / Edialux</span>
+            <span class="attendee-chip"><span class="dot"></span>Stanley Black &amp; Decker</span>
+            <span class="attendee-chip"><span class="dot"></span>DCM</span>
+            <span class="attendee-chip"><span class="dot"></span>Soudal</span>
+            <span class="attendee-chip"><span class="dot"></span>Bostik</span>
+            <span class="attendee-chip"><span class="dot"></span>Husqvarna</span>
+            <span class="attendee-chip"><span class="dot"></span>Maxeda DIY Group</span>
+            <span class="attendee-more">+ 25 andere bedrijven</span>
+          </div>
+        </section>
+      </div>
+
+      <aside class="facts-sidebar">
+        <div class="facts-card reveal">
+          <div class="fact-grid">
+            <div class="fact">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <div><span class="fact-label">Datum</span><span class="fact-value">Donderdag 24 september 2026</span></div>
+            </div>
+            <div class="fact">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+              <div><span class="fact-label">Tijd</span><span class="fact-value">17u00 – 22u00</span></div>
+            </div>
+            <div class="fact">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
+              <div>
+                <span class="fact-label">Locatie</span>
+                <span class="fact-value">link21, Welvaartstraat 14/1, 2200 Herentals</span>
+                <a class="link-arrow" href="https://www.google.com/maps/search/?api=1&query=Welvaartstraat+14%2F1%2C+2200+Herentals" target="_blank" rel="noopener noreferrer" style="margin-top:.4rem;">Plan je route <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <div class="fact fact--price">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 12 12 20l-8-8V4h8Z"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+              <div>
+                <span class="fact-label">Prijs</span>
+                <ul class="price-tiers">
+                  <li><span class="tier-label">Leden <span class="tag-pill">Voordeelprijs</span></span><strong>€199 per persoon</strong></li>
+                  <li><span class="tier-label">Leden Teampakket (vanaf 3 personen) <span class="tag-pill">Voordeelprijs</span></span><strong>€175 per persoon</strong></li>
+                  <li><span class="tier-label">Niet-leden</span><strong>€349 per persoon</strong></li>
+                </ul>
+                <span class="fact-note">Betalend event, prijs excl. btw</span>
+              </div>
+            </div>
+          </div>
+          <div class="facts-actions">
+            <a class="btn btn-cta btn-lg" href="#">Schrijf mij in</a>
+            <a class="btn btn-ghost" href="#aanwezigen">Bekijk aanwezige leden</a>
+          </div>
+          <div class="fact">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+            <div><span class="fact-label">Annulatie</span><span class="fact-value">Bij annulatie na 19 september of bij no-show wordt €199 per persoon aangerekend.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="cta-band-outer wrap">
+    <div class="orb" aria-hidden="true"></div>
+    <div class="cta-band reveal">
+      <div class="content">
+        <div class="copy">
+          <h2>Nog geen HIMA Benelux-lid?</h2>
+          <p class="lede">Leden betalen €199 in plaats van €349 voor dit event, en krijgen toegang tot alle reguliere events.</p>
+        </div>
+        <div class="action">
+          <a class="btn btn-cta btn-lg" href="lid-worden.html">Word lid</a>
+          <span class="hint">Vrijblijvend gesprek, geen verplichtingen.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="wrap">
+  <footer id="contact">
+    <div class="footer-in">
+      <div>
+        <a class="brand" href="index.html" style="text-decoration:none;">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 100 100">
+              <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+              <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+            </svg>
+          </span>
+          <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+        </a>
+        <p>Vragen over dit evenement? Neem contact op en we helpen je verder.</p>
+      </div>
+      <div>
+        <h3>Snel navigeren</h3>
+        <ul class="flinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="evenementen.html">Alle evenementen</a></li>
+          <li><a href="#aanwezigen">Aanwezige leden</a></li>
+          <li><a href="tier-quiz.html">Tarievenquiz</a></li>
+          <li><a href="lid-worden.html">Word lid</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Schrijf je in op onze nieuwsbrief</h3>
+        <form class="newsletter-form" onsubmit="return false;">
+          <div class="field">
+            <label for="nl-voornaam">Voornaam</label>
+            <input id="nl-voornaam" name="voornaam" type="text" autocomplete="given-name" placeholder="Voornaam">
+          </div>
+          <div class="field">
+            <label for="nl-achternaam">Achternaam</label>
+            <input id="nl-achternaam" name="achternaam" type="text" autocomplete="family-name" placeholder="Achternaam">
+          </div>
+          <div class="field">
+            <label for="nl-email">E-mail</label>
+            <input id="nl-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.be" required>
+          </div>
+          <button class="btn btn-solid" type="submit">Versturen</button>
+        </form>
+      </div>
+    </div>
+    <div class="legal-bar">
+      <div><a href="#">Privacybeleid</a><a href="#">Cookiebeleid</a><a href="#">Algemene voorwaarden</a></div>
+      <span class="social"><a href="#" aria-label="HIMA Benelux op LinkedIn">LinkedIn</a><span>webdesign © Sanmax Projects</span></span>
+    </div>
+  </footer>
+</div>
+
+<noscript><style>.reveal, .reveal-stagger > *{opacity:1!important; transform:none!important;}</style></noscript>
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!('IntersectionObserver' in window)) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('reveal-stagger')) {
+          Array.prototype.forEach.call(entry.target.children, function(child){ child.classList.add('is-visible'); });
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+  Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var url = encodeURIComponent(location.href);
+  var title = encodeURIComponent(document.title);
+  var fb = document.getElementById('share-fb');
+  var li = document.getElementById('share-li');
+  var wa = document.getElementById('share-wa');
+  var mail = document.getElementById('share-mail');
+  if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+  if (li) li.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+  if (wa) wa.href = 'https://wa.me/?text=' + title + '%20' + url;
+  if (mail) mail.href = 'mailto:?subject=' + title + '&body=' + decodeURIComponent(url);
+})();
+</script>

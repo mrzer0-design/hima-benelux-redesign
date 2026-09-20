@@ -1,0 +1,499 @@
+<!doctype html>
+<title>Inloggen — HIMA Benelux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#dcf1f4;
+    --sky-soft:#eef8f9;
+    --paper:#ffffff;
+    --ink:#132c31;
+    --ink-soft:#3d565b;
+    --line:#cfe6e9;
+    --teal:#0e8a9c;
+    --teal-deep:#0a6c7b;
+    --teal-wash:#e4f4f6;
+    --cta:#00afcd;
+    --cta-deep:#07a0b8;
+    --cta-wash:#e3f7fa;
+    --cta-line:#9fdfea;
+    --cta-btn:#008098;
+    --cta-btn-hover:#006f86;
+    --focus:#0e8a9c;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  body{
+    overflow-x:hidden;
+    margin:0;
+    background-color:#ffffff;
+    background-image:
+      radial-gradient(130% 55% at 50% -8%, #dcf1f4 0%, transparent 60%),
+      radial-gradient(80% 40% at 90% 15%, rgb(14 138 156 / .14), transparent 65%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding-inline:20px;
+  }
+  .wrap{max-width:1220px;margin-inline:auto;}
+  h1,h2,h3{
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .mono{font-family:"Manrope", ui-sans-serif, system-ui, sans-serif; font-variant-numeric:tabular-nums;}
+
+  ::selection{background:var(--teal-wash); color:var(--ink);}
+  ::-webkit-scrollbar{width:12px; height:12px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:color-mix(in srgb, var(--teal) 45%, transparent); border-radius:8px; border:3px solid var(--paper);}
+  ::-webkit-scrollbar-thumb:hover{background:var(--teal);}
+
+  a.skip-link{
+    position:absolute; left:-999px; top:auto;
+    background:var(--teal-deep); color:#fff; padding:.7em 1.1em; z-index:1000; border-radius:0 0 6px 0;
+  }
+  a.skip-link:focus{left:0; top:0;}
+
+  :focus-visible{outline:2.5px solid var(--focus); outline-offset:3px; border-radius:2px;}
+
+  @keyframes rise{from{opacity:.001; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .auth-card{animation:rise .6s cubic-bezier(.16,1,.3,1) both;}
+
+  .reveal, .reveal-stagger > *{
+    opacity:0; transform:translateY(16px);
+    transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.is-visible, .reveal-stagger > *.is-visible{opacity:1; transform:translateY(0);}
+  .no-js .reveal, .no-js .reveal-stagger > *{opacity:1; transform:none;}
+
+  .concept-banner{
+    background:var(--teal-wash); color:var(--ink-soft); text-align:center; border-bottom:1px solid var(--line);
+    font-size:.78rem; letter-spacing:.04em; padding:.55rem 1rem;
+    margin-inline:-20px; padding-inline:20px;
+  }
+  .concept-banner b{color:var(--teal-deep);}
+
+  /* floating glass pill nav — identical to the rest of the site */
+  .nav-wrap{position:fixed; top:52px; left:0; right:0; z-index:200; display:flex; flex-direction:column; align-items:center; gap:.6rem; padding-inline:20px; pointer-events:none;}
+  .pill-nav{
+    pointer-events:auto; width:100%; max-width:1220px;
+    display:flex; align-items:center; justify-content:space-between; gap:1.6rem;
+    padding:.5rem .6rem .5rem 1rem; border-radius:999px;
+    background:rgba(255,255,255,.68); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 1px 1px rgb(19 44 49 / .04), 0 14px 32px -14px rgb(19 44 49 / .22);
+    transition:box-shadow .2s ease;
+  }
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none; flex:none;}
+  .brand-mark{width:40px;height:40px;border-radius:50%; background:var(--teal); display:flex; align-items:center; justify-content:center; flex:none; box-shadow:0 4px 12px -5px rgb(14 60 68 / .4);}
+  .brand-mark svg{width:22px;height:22px;}
+  .brand-word{font-size:.72rem; line-height:1.34; font-weight:800; letter-spacing:.01em; color:var(--ink); text-transform:uppercase;}
+  .brand-word .tag{display:block; margin-top:.22rem; font-weight:700; font-size:.7rem; letter-spacing:.13em; color:var(--teal-deep);}
+
+  .nav-links{display:flex; align-items:center; gap:1.7rem; list-style:none; margin:0; padding:0; font-size:.88rem; font-weight:500;}
+  .nav-links a{text-decoration:none; position:relative; padding-block:.3rem;}
+  .nav-links a::after{content:"";position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--teal); transform:scaleX(0); transform-origin:left; transition:transform .2s ease;}
+  .nav-links a:hover::after{transform:scaleX(1);}
+  .nav-actions{display:flex; align-items:center; gap:1.1rem; flex:none;}
+  .nav-lang{display:flex; align-items:center; gap:.3rem; font-size:.78rem; color:var(--ink-soft);}
+  .nav-lang a{text-decoration:none; transition:color .15s ease;}
+  .nav-lang a:hover{color:var(--teal);}
+  .nav-lang a[aria-current="true"]{color:var(--ink); font-weight:600;}
+  .nav-lang span{opacity:.4;}
+  .nav-login{font-size:.85rem; font-weight:600; text-decoration:none; color:var(--ink-soft); transition:color .15s ease; white-space:nowrap;}
+  .nav-login:hover{color:var(--teal-deep);}
+  .nav-login[aria-current="page"]{color:var(--teal-deep);}
+
+  .nav-toggle-input{position:absolute; opacity:0; pointer-events:none;}
+  .nav-toggle-btn{display:none; flex:none; width:36px; height:36px; border-radius:50%; align-items:center; justify-content:center; gap:4px; flex-direction:column; cursor:pointer; background:transparent; border:1px solid var(--line);}
+  .nav-toggle-btn span{display:block; width:15px; height:2px; background:var(--ink); border-radius:2px; transition:transform .2s ease, opacity .2s ease;}
+  .mobile-panel{
+    pointer-events:auto; display:none; flex-direction:column; gap:.2rem;
+    width:100%; max-width:340px; padding:.9rem 1.1rem; border-radius:20px;
+    background:rgba(255,255,255,.85); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+    border:1px solid rgba(255,255,255,.6); box-shadow:0 14px 32px -14px rgb(19 44 49 / .25);
+  }
+  .mobile-panel a{text-decoration:none; padding:.6rem .3rem; font-size:.95rem; font-weight:500; border-bottom:1px solid var(--line);}
+  .mobile-panel a:last-child{border-bottom:none;}
+  .nav-wrap:has(.nav-toggle-input:checked) .mobile-panel{display:flex;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(2){opacity:0;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  /* button system — reused verbatim */
+  .btn{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:"Manrope", sans-serif; font-weight:700; font-size:.9rem;
+    padding:.75rem 1.35rem; border-radius:999px; text-decoration:none; border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+    cursor:pointer; white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px) scale(.99);}
+  .btn-cta{background:var(--cta-btn); color:#fff; box-shadow:0 8px 20px -8px rgb(0 128 152 / .4);}
+  .btn-cta:hover{background:var(--cta-btn-hover); box-shadow:0 10px 22px -8px rgb(0 128 152 / .45);}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .btn-sm{padding:.58rem 1.35rem; font-size:.82rem;}
+  .btn-lg{padding:.95rem 2rem; font-size:1rem;}
+  .link-arrow{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; font-weight:600; color:var(--teal-deep); border-bottom:1px solid transparent; transition:border-color .15s ease, gap .15s ease;}
+  .link-arrow:hover{border-color:var(--teal-deep); gap:.6rem;}
+
+  /* auth cards — sign in + register, side by side */
+  main{padding-top:6.4rem;}
+  .auth-shell{display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:62rem; margin-inline:auto; padding-top:3.2rem; padding-bottom:1rem; align-items:stretch;}
+  .auth-card{
+    width:100%; height:100%; display:flex; flex-direction:column;
+    padding:2.4rem 2.2rem; border:1px solid var(--line); border-radius:18px;
+    background:linear-gradient(160deg, #ffffff 0%, var(--sky-soft) 60%, var(--teal-wash) 100%);
+    box-shadow:0 14px 32px -14px rgb(14 60 68 / .25);
+  }
+  .visually-hidden{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; font-size:1.3rem;}
+  .auth-card h1, .auth-card h2:not(.visually-hidden){font-size:clamp(1.6rem, 1.2vw + 1.2rem, 2rem);}
+  .auth-lede{margin-top:.7rem; color:var(--ink-soft); font-size:.96rem; line-height:1.6;}
+
+  .usp-list{list-style:none; margin:1.6rem 0 0; padding:0; display:flex; flex-direction:column; gap:.7rem;}
+  .usp-list li{display:flex; align-items:flex-start; gap:.65rem; font-size:.92rem; color:var(--ink);}
+  .usp-list svg{flex:none; width:18px; height:18px; margin-top:.1rem; color:var(--teal-deep);}
+  .reg-toggle-input{position:absolute; opacity:0; pointer-events:none;}
+  .reg-toggle-btn{width:100%; justify-content:center; margin-top:1.8rem; cursor:pointer;}
+  form.reg-form{display:none; margin-top:1.8rem;}
+  #reg-toggle:checked ~ .reg-toggle-btn{display:none;}
+  #reg-toggle:checked ~ form.reg-form{display:flex;}
+
+  .auth-form{display:flex; flex-direction:column; gap:1.1rem; margin-top:1.8rem;}
+  .auth-form-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.1rem;}
+  .field{display:flex; flex-direction:column; gap:.3rem;}
+  .field label{font-size:.72rem; letter-spacing:.04em; color:var(--ink-soft);}
+  .field input{
+    background:#ffffff; border:1px solid var(--line);
+    border-radius:8px; padding:.75rem .9rem; color:var(--ink); font-family:"Manrope", sans-serif; font-size:.94rem;
+  }
+  .field input::placeholder{color:color-mix(in srgb, var(--ink-soft) 70%, transparent);}
+  .field input:focus{border-color:var(--teal-deep);}
+
+  .auth-row{display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-size:.86rem;}
+  .checkbox-field{display:inline-flex; align-items:center; gap:.55rem; color:var(--ink-soft); cursor:pointer;}
+  .checkbox-field input{accent-color:var(--teal-deep); width:16px; height:16px; margin:0;}
+  .checkbox-field a{color:var(--teal-deep); font-weight:600; text-decoration:none;}
+  .checkbox-field a:hover{text-decoration:underline;}
+  .checkbox-field--wrap{align-items:flex-start; font-size:.86rem; line-height:1.5;}
+  .checkbox-field--wrap input{margin-top:.2rem; flex:none;}
+  .auth-row .forgot-link{font-weight:600; color:var(--teal-deep); text-decoration:none;}
+  .auth-row .forgot-link:hover{text-decoration:underline;}
+  .auth-submit{width:100%; justify-content:center; margin-top:.3rem;}
+
+  /* cta band — reused verbatim */
+  .cta-band-outer{position:relative; padding-block:1.4rem 3rem;}
+  .cta-band-outer .orb{
+    position:absolute; top:-60px; right:-40px; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, var(--cta), var(--teal) 60%, transparent 76%);
+    filter:blur(55px); opacity:.32; z-index:0; pointer-events:none;
+    animation:orbdrift 18s ease-in-out infinite alternate;
+  }
+  @keyframes orbdrift{from{transform:translate(0,0) scale(1);} to{transform:translate(-18px,16px) scale(1.1);}}
+  .cta-band{
+    position:relative; z-index:1; border-radius:12px; overflow:hidden; padding:4rem 3rem; isolation:isolate;
+    border:1px solid rgba(255,255,255,.14);
+    background:
+      radial-gradient(65% 130% at 100% 0%, rgb(0 175 205 / .35) 0%, transparent 60%),
+      radial-gradient(55% 110% at 0% 100%, rgb(14 138 156 / .3) 0%, transparent 55%),
+      linear-gradient(115deg, #0e2a2d, var(--ink) 55%, #0c2528);
+  }
+  .cta-band .content{position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:2.5rem; flex-wrap:wrap;}
+  .cta-band .copy{flex:1 1 0;}
+  .cta-band h2{color:#f2fbfc; font-size:clamp(1.9rem, 1.6vw + 1.3rem, 2.6rem); line-height:1.1;}
+  .cta-band .lede{margin-top:.9rem; color:rgb(242 251 252 / .78); font-size:1.02rem; max-width:44ch;}
+  .cta-band .action{flex:1 1 0; display:flex; flex-direction:column; align-items:flex-start; gap:.6rem;}
+  .cta-band .hint{font-size:.78rem; color:rgb(242 251 252 / .6);}
+  .cta-reviews{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:2.6rem; padding-top:2.2rem; border-top:1px solid rgb(242 251 252 / .16);}
+  .cta-review p{color:rgb(242 251 252 / .88); font-size:.95rem; line-height:1.6; font-style:italic;}
+  .cta-review-who{display:flex; align-items:center; gap:.7rem; margin-top:.9rem;}
+  .cta-review-who .avatar{
+    flex:none; width:34px; height:34px; border-radius:50%; background:rgb(242 251 252 / .18);
+    color:#f2fbfc; display:flex; align-items:center; justify-content:center; font-size:.74rem; font-weight:700;
+  }
+  .cta-review-who .who-text{font-size:.82rem; color:rgb(242 251 252 / .75); line-height:1.4;}
+  .cta-review-who strong{color:#f2fbfc; font-weight:700;}
+
+  /* footer — reused verbatim */
+  footer{
+    background:linear-gradient(175deg, var(--teal-wash) 0%, var(--sky) 100%);
+    color:var(--ink); margin-top:1.5rem; border-radius:10px 10px 0 0; border:1px solid var(--line); border-bottom:none;
+  }
+  .footer-in{padding:3rem 2.6rem 1.8rem; display:grid; grid-template-columns:1.3fr 1fr 1.3fr; gap:3rem;}
+  footer p{color:var(--ink-soft); font-size:.9rem; margin-top:1rem; max-width:34ch;}
+  footer h3{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:1rem; font-weight:700;}
+  footer .flinks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.65rem; font-size:.92rem;}
+  footer .flinks a{text-decoration:none; color:var(--ink); transition:color .15s ease;}
+  footer .flinks a:hover{color:var(--teal-deep);}
+  .newsletter-form{display:flex; flex-direction:column; gap:.7rem; margin-top:.9rem;}
+  .newsletter-form .field input{border-radius:5px; padding:.7rem .8rem; font-size:.92rem;}
+  .newsletter-form .btn{background:var(--teal-deep); color:#fff; margin-top:.3rem; justify-content:center; border-radius:999px;}
+  .newsletter-form .btn:hover{background:#085a66;}
+  .legal-bar{border-top:1px solid var(--line); padding:1.1rem 2.6rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.8rem; color:var(--ink-soft);}
+  .legal-bar a{text-decoration:none; color:inherit; margin-right:1.2rem;}
+  .legal-bar a:hover{color:var(--teal-deep);}
+  .legal-bar .social{display:inline-flex; align-items:center; gap:1rem;}
+  .legal-bar .social a{margin-right:0;}
+
+  @media (max-width:880px){
+    .nav-links, .nav-lang, .nav-login{display:none;}
+    .nav-toggle-btn{display:flex;}
+    main{padding-top:5.6rem;}
+    .auth-shell{grid-template-columns:1fr; max-width:26rem; gap:1.6rem;}
+    .footer-in{grid-template-columns:1fr; gap:2.2rem;}
+    .cta-band .content{flex-direction:column; align-items:flex-start;}
+    .cta-band .action{width:100%;}
+    .cta-reviews{grid-template-columns:1fr; gap:1.6rem;}
+  }
+  @media (max-width:480px){
+    .brand-word{display:none;}
+    .auth-card{padding:1.9rem 1.5rem;}
+    .auth-form-grid{grid-template-columns:1fr;}
+    .cta-band{padding:2.6rem 1.6rem;}
+  }
+</style>
+
+<a class="skip-link" href="#main">Ga naar inhoud</a>
+<div class="concept-banner">Redesign-concept voor <b>HIMA Benelux</b> — niet de officiële website</div>
+
+<div class="nav-wrap">
+  <nav class="pill-nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+          <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+        </svg>
+      </span>
+      <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#doelstellingen">HIMA Benelux</a></li>
+      <li><a href="evenementen.html">Evenementen</a></li>
+      <li><a href="index.html#leden">Leden</a></li>
+      <li><a href="lid-worden.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="nav-lang"><a href="#" aria-current="true">NL</a><span>·</span><a href="#">FR</a><span>·</span><a href="#">EN</a></span>
+      <a class="nav-login" href="inloggen.html" aria-current="page">Inloggen</a>
+      <a class="btn btn-cta btn-sm" href="lid-worden.html">Word lid</a>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <label for="nav-toggle" class="nav-toggle-btn" aria-label="Menu openen"><span></span><span></span><span></span></label>
+  </nav>
+  <div class="mobile-panel">
+    <a href="index.html">Home</a>
+    <a href="index.html#doelstellingen">HIMA Benelux</a>
+    <a href="evenementen.html">Evenementen</a>
+    <a href="index.html#leden">Leden</a>
+    <a href="lid-worden.html#contact">Contact</a>
+    <a href="inloggen.html">Inloggen</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap">
+    <div class="auth-shell">
+      <div class="auth-card">
+        <h1>Inloggen</h1>
+        <p class="auth-lede">Log in op uw HIMA Benelux-account om uw lidmaatschap te beheren, in te schrijven voor events en facturen te raadplegen.</p>
+        <h2 class="visually-hidden">Inlogformulier</h2>
+        <form class="auth-form" onsubmit="return false;">
+          <div class="field">
+            <label for="login-email">E-mailadres</label>
+            <input id="login-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.be" required>
+          </div>
+          <div class="field">
+            <label for="login-password">Wachtwoord</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Wachtwoord" required>
+          </div>
+          <div class="auth-row">
+            <label class="checkbox-field"><input type="checkbox" name="remember"> Onthoud mij</label>
+            <a class="forgot-link" href="#">Wachtwoord vergeten?</a>
+          </div>
+          <button class="btn btn-cta btn-lg auth-submit" type="submit">Inloggen</button>
+        </form>
+      </div>
+
+      <div class="auth-card" id="registreren">
+        <h2>Account aanmaken</h2>
+        <p class="auth-lede">Nog geen account? Registreer als medewerker van een HIMA Benelux-lid om toegang te krijgen tot het ledenportaal.</p>
+        <ul class="usp-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg>
+            In enkele klikken ingeschreven voor events
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg>
+            Facturen en documenten centraal terugvinden
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg>
+            Rechtstreeks contact met het secretariaat
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg>
+            Persoonlijk dashboard voor uw bedrijf
+          </li>
+        </ul>
+        <input type="checkbox" id="reg-toggle" class="reg-toggle-input">
+        <label for="reg-toggle" class="btn btn-cta btn-lg reg-toggle-btn">Start registratie</label>
+        <form class="auth-form reg-form" onsubmit="return false;">
+          <div class="auth-form-grid">
+            <div class="field">
+              <label for="reg-voornaam">Voornaam</label>
+              <input id="reg-voornaam" name="voornaam" type="text" autocomplete="given-name" placeholder="Voornaam" required>
+            </div>
+            <div class="field">
+              <label for="reg-achternaam">Achternaam</label>
+              <input id="reg-achternaam" name="achternaam" type="text" autocomplete="family-name" placeholder="Achternaam" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="reg-bedrijf">Bedrijf</label>
+            <input id="reg-bedrijf" name="bedrijf" type="text" autocomplete="organization" placeholder="Bedrijfsnaam" required>
+          </div>
+          <div class="field">
+            <label for="reg-email">E-mailadres</label>
+            <input id="reg-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.be" required>
+          </div>
+          <div class="field">
+            <label for="reg-password">Wachtwoord</label>
+            <input id="reg-password" name="password" type="password" autocomplete="new-password" placeholder="Kies een wachtwoord" required>
+          </div>
+          <label class="checkbox-field checkbox-field--wrap"><input type="checkbox" name="terms" required> Ik ga akkoord met de <a href="#">gebruiksvoorwaarden</a> en het <a href="#">privacybeleid</a></label>
+          <button class="btn btn-cta btn-lg auth-submit" type="submit">Account aanmaken</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="cta-band-outer">
+      <div class="orb" aria-hidden="true"></div>
+      <div class="cta-band reveal">
+        <div class="content">
+          <div class="copy">
+            <h2>Nog geen HIMA Benelux-lid?</h2>
+            <p class="lede">Een account is enkel voor medewerkers van leden. Is uw bedrijf nog geen lid? Sluit u aan bij de federatie die de sector vertegenwoordigt en geef uw stem in de Benelux.</p>
+          </div>
+          <div class="action">
+            <a class="btn btn-cta btn-lg" href="lid-worden.html">Word lid</a>
+            <span class="hint">Bekijk de tarieven voor kleine en grote ondernemingen.</span>
+          </div>
+        </div>
+        <div class="cta-reviews">
+          <div class="cta-review">
+            <p>"Dankzij HIMA Benelux hebben we rechtstreeks toegang tot de juiste contacten in de sector. Elk event levert bruikbare inzichten op."</p>
+            <div class="cta-review-who">
+              <span class="avatar" aria-hidden="true">JV</span>
+              <span class="who-text"><strong>Jan Van Herck</strong><br>Soudal</span>
+            </div>
+          </div>
+          <div class="cta-review">
+            <p>"Het lidmaatschap betaalt zichzelf terug: één telefoontje naar het secretariaat en we hebben antwoord op onze vraag."</p>
+            <div class="cta-review-who">
+              <span class="avatar" aria-hidden="true">ED</span>
+              <span class="who-text"><strong>Els Dockx</strong><br>Husqvarna</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <footer id="contact">
+      <div class="footer-in">
+        <div>
+          <a class="brand" href="index.html" style="text-decoration:none;">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 100 100">
+                <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+                <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+              </svg>
+            </span>
+            <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+          </a>
+          <p>Problemen om in te loggen? Neem contact op, we helpen u graag verder.</p>
+        </div>
+        <div>
+          <h3>Snel navigeren</h3>
+          <ul class="flinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="evenementen.html">Evenementen</a></li>
+            <li><a href="lid-worden.html">Lid worden</a></li>
+            <li><a href="tier-quiz.html">Tarievenquiz</a></li>
+            <li><a href="inloggen.html">Inloggen</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Neem contact op</h3>
+          <form class="newsletter-form" onsubmit="return false;">
+            <div class="field">
+              <label for="nl-voornaam">Voornaam</label>
+              <input id="nl-voornaam" name="voornaam" type="text" autocomplete="given-name" placeholder="Voornaam">
+            </div>
+            <div class="field">
+              <label for="nl-achternaam">Achternaam</label>
+              <input id="nl-achternaam" name="achternaam" type="text" autocomplete="family-name" placeholder="Achternaam">
+            </div>
+            <div class="field">
+              <label for="nl-email">E-mail</label>
+              <input id="nl-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.be" required>
+            </div>
+            <button class="btn" type="submit">Versturen</button>
+          </form>
+        </div>
+      </div>
+      <div class="legal-bar">
+        <div><a href="#">Privacybeleid</a><a href="#">Cookiebeleid</a><a href="#">Algemene voorwaarden</a></div>
+        <span class="social"><a href="#" aria-label="HIMA Benelux op LinkedIn">LinkedIn</a><span>webdesign © Sanmax Projects</span></span>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<noscript><style>.reveal, .reveal-stagger > *{opacity:1!important; transform:none!important;}</style></noscript>
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!('IntersectionObserver' in window)) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('reveal-stagger')) {
+          Array.prototype.forEach.call(entry.target.children, function(child){ child.classList.add('is-visible'); });
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+  Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+})();
+</script>

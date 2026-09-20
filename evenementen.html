@@ -1,0 +1,657 @@
+<!doctype html>
+<title>Evenementen — HIMA Benelux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#dcf1f4;
+    --sky-soft:#eef8f9;
+    --paper:#ffffff;
+    --ink:#132c31;
+    --ink-soft:#3d565b;
+    --line:#cfe6e9;
+    --teal:#0e8a9c;
+    --teal-deep:#0a6c7b;
+    --teal-wash:#e4f4f6;
+    --cta:#00afcd;
+    --cta-deep:#07a0b8;
+    --cta-wash:#e3f7fa;
+    --cta-line:#9fdfea;
+    --cta-btn:#008098;
+    --cta-btn-hover:#006f86;
+    --focus:#0e8a9c;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  body{
+    overflow-x:hidden;
+    margin:0;
+    background-color:#ffffff;
+    background-image:
+      radial-gradient(130% 55% at 50% -8%, #dcf1f4 0%, transparent 60%),
+      radial-gradient(80% 40% at 90% 15%, rgb(14 138 156 / .14), transparent 65%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding-inline:20px;
+  }
+  .wrap{max-width:1220px;margin-inline:auto;}
+  h1,h2,h3{
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .mono{font-family:"Manrope", ui-sans-serif, system-ui, sans-serif; font-variant-numeric:tabular-nums;}
+
+  ::selection{background:var(--teal-wash); color:var(--ink);}
+  ::-webkit-scrollbar{width:12px; height:12px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:color-mix(in srgb, var(--teal) 45%, transparent); border-radius:8px; border:3px solid var(--paper);}
+  ::-webkit-scrollbar-thumb:hover{background:var(--teal);}
+
+  a.skip-link{
+    position:absolute; left:-999px; top:auto;
+    background:var(--teal-deep); color:#fff; padding:.7em 1.1em; z-index:1000; border-radius:0 0 6px 0;
+  }
+  a.skip-link:focus{left:0; top:0;}
+
+  :focus-visible{outline:2.5px solid var(--focus); outline-offset:3px; border-radius:2px;}
+
+  @keyframes rise{from{opacity:.001; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .page-hero h1, .page-hero-lede{animation:rise .6s cubic-bezier(.16,1,.3,1) both;}
+  .page-hero-lede{animation-delay:.08s;}
+
+  .reveal, .reveal-stagger > *{
+    opacity:0; transform:translateY(16px);
+    transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.is-visible, .reveal-stagger > *.is-visible{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *:nth-child(1){transition-delay:0s;}
+  .reveal-stagger > *:nth-child(2){transition-delay:.07s;}
+  .reveal-stagger > *:nth-child(3){transition-delay:.14s;}
+  .reveal-stagger > *:nth-child(4){transition-delay:.21s;}
+  .reveal-stagger > *:nth-child(5){transition-delay:.28s;}
+  .reveal-stagger > *:nth-child(6){transition-delay:.35s;}
+  .no-js .reveal, .no-js .reveal-stagger > *{opacity:1; transform:none;}
+
+  .concept-banner{
+    background:var(--teal-wash); color:var(--ink-soft); text-align:center; border-bottom:1px solid var(--line);
+    font-size:.78rem; letter-spacing:.04em; padding:.55rem 1rem;
+    margin-inline:-20px; padding-inline:20px;
+  }
+  .concept-banner b{color:var(--teal-deep);}
+
+  /* floating glass pill nav — identical to the rest of the site */
+  .nav-wrap{position:fixed; top:52px; left:0; right:0; z-index:200; display:flex; flex-direction:column; align-items:center; gap:.6rem; padding-inline:20px; pointer-events:none;}
+  .pill-nav{
+    pointer-events:auto; width:100%; max-width:1220px;
+    display:flex; align-items:center; justify-content:space-between; gap:1.6rem;
+    padding:.5rem .6rem .5rem 1rem; border-radius:999px;
+    background:rgba(255,255,255,.68); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 1px 1px rgb(19 44 49 / .04), 0 14px 32px -14px rgb(19 44 49 / .22);
+    transition:box-shadow .2s ease;
+  }
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none; flex:none;}
+  .brand-mark{width:40px;height:40px;border-radius:50%; background:var(--teal); display:flex; align-items:center; justify-content:center; flex:none; box-shadow:0 4px 12px -5px rgb(14 60 68 / .4);}
+  .brand-mark svg{width:22px;height:22px;}
+  .brand-word{font-size:.72rem; line-height:1.34; font-weight:800; letter-spacing:.01em; color:var(--ink); text-transform:uppercase;}
+  .brand-word .tag{display:block; margin-top:.22rem; font-weight:700; font-size:.7rem; letter-spacing:.13em; color:var(--teal-deep);}
+
+  .nav-links{display:flex; align-items:center; gap:1.7rem; list-style:none; margin:0; padding:0; font-size:.88rem; font-weight:500;}
+  .nav-links a{text-decoration:none; position:relative; padding-block:.3rem;}
+  .nav-links a::after{content:"";position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--teal); transform:scaleX(0); transform-origin:left; transition:transform .2s ease;}
+  .nav-links a:hover::after{transform:scaleX(1);}
+  .nav-links a[aria-current="page"]{color:var(--teal-deep); font-weight:600;}
+  .nav-links a[aria-current="page"]::after{transform:scaleX(1);}
+  .nav-actions{display:flex; align-items:center; gap:1.1rem; flex:none;}
+  .nav-lang{display:flex; align-items:center; gap:.3rem; font-size:.78rem; color:var(--ink-soft);}
+  .nav-lang a{text-decoration:none; transition:color .15s ease;}
+  .nav-lang a:hover{color:var(--teal);}
+  .nav-lang a[aria-current="true"]{color:var(--ink); font-weight:600;}
+  .nav-lang span{opacity:.4;}
+  .nav-login{font-size:.85rem; font-weight:600; text-decoration:none; color:var(--ink-soft); transition:color .15s ease; white-space:nowrap;}
+  .nav-login:hover{color:var(--teal-deep);}
+
+  .nav-toggle-input{position:absolute; opacity:0; pointer-events:none;}
+  .nav-toggle-btn{display:none; flex:none; width:36px; height:36px; border-radius:50%; align-items:center; justify-content:center; gap:4px; flex-direction:column; cursor:pointer; background:transparent; border:1px solid var(--line);}
+  .nav-toggle-btn span{display:block; width:15px; height:2px; background:var(--ink); border-radius:2px; transition:transform .2s ease, opacity .2s ease;}
+  .mobile-panel{
+    pointer-events:auto; display:none; flex-direction:column; gap:.2rem;
+    width:100%; max-width:340px; padding:.9rem 1.1rem; border-radius:20px;
+    background:rgba(255,255,255,.85); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+    border:1px solid rgba(255,255,255,.6); box-shadow:0 14px 32px -14px rgb(19 44 49 / .25);
+  }
+  .mobile-panel a{text-decoration:none; padding:.6rem .3rem; font-size:.95rem; font-weight:500; border-bottom:1px solid var(--line);}
+  .mobile-panel a:last-child{border-bottom:none;}
+  .nav-wrap:has(.nav-toggle-input:checked) .mobile-panel{display:flex;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(2){opacity:0;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  /* button system — reused verbatim */
+  .btn{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:"Manrope", sans-serif; font-weight:700; font-size:.9rem;
+    padding:.75rem 1.35rem; border-radius:999px; text-decoration:none; border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+    cursor:pointer; white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px) scale(.99);}
+  .btn-cta{background:var(--cta-btn); color:#fff; box-shadow:0 8px 20px -8px rgb(0 128 152 / .4);}
+  .btn-cta:hover{background:var(--cta-btn-hover); box-shadow:0 10px 22px -8px rgb(0 128 152 / .45);}
+  .btn-solid{background:var(--teal-deep); color:#fff; box-shadow:0 5px 14px -7px rgb(14 138 156 / .3);}
+  .btn-solid:hover{background:#085a66;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .btn-sm{padding:.58rem 1.35rem; font-size:.82rem;}
+  .btn-lg{padding:.95rem 2rem; font-size:1rem;}
+  .link-arrow{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; font-weight:600; color:var(--teal-deep); border-bottom:1px solid transparent; transition:border-color .15s ease, gap .15s ease;}
+  .link-arrow:hover{border-color:var(--teal-deep); gap:.6rem;}
+
+  main{padding-top:6.4rem;}
+  .page-hero{padding-block:2.6rem 2.2rem; max-width:56rem;}
+  .page-hero h1{font-size:clamp(1.9rem, 2.4vw + 1rem, 2.85rem); line-height:1.12;}
+  .page-hero-lede{max-width:60ch; margin-top:1.2rem; color:var(--ink-soft); font-size:1.08rem;}
+
+  section{padding-top:3rem; padding-bottom:3rem;}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; margin-bottom:2.2rem; flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(1.5rem, 1vw + 1.15rem, 2rem);}
+  .section-head .sub{color:var(--ink-soft); max-width:60ch; margin-top:.5rem;}
+  .section-head.quiet{margin-bottom:1.5rem;}
+  .section-head.quiet h2{font-size:clamp(1.2rem, .5vw + 1.05rem, 1.4rem); font-weight:700; letter-spacing:-.01em;}
+
+  /* filter bar — month pills; the active one is solid ink, the rest are outlined and scroll */
+  .filter-bar-outer{display:flex; align-items:center; gap:.7rem; margin-bottom:2.2rem;}
+  .filter-bar{
+    display:flex; align-items:center; gap:.6rem; overflow-x:auto; scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(90deg, #000 92%, transparent);
+    mask-image:linear-gradient(90deg, #000 92%, transparent);
+    padding-block:.2rem;
+  }
+  .filter-bar::-webkit-scrollbar{display:none;}
+  .filter-pill{
+    flex:none; font-family:"Manrope", sans-serif; font-weight:600; font-size:.86rem;
+    padding:.6rem 1.2rem; border-radius:999px; border:1px solid var(--line); background:#ffffff; color:var(--ink);
+    cursor:pointer; white-space:nowrap; transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .filter-pill:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .filter-pill.is-active{background:var(--ink); border-color:var(--ink); color:#fff;}
+  .filter-chevron{flex:none; color:var(--line); font-size:1.1rem;}
+  .filter-nav-btn{
+    flex:none; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:#ffffff;
+    display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--ink);
+    cursor:pointer; transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .filter-nav-btn:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .filter-nav-btn:active{transform:scale(.94);}
+
+  /* horizontal event list rows */
+  .event-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1rem;}
+  .event-row{
+    display:flex; align-items:center; gap:1.4rem; padding:1.2rem 1.5rem;
+    border:1px solid var(--line); border-radius:16px;
+    background:linear-gradient(160deg, #ffffff 0%, var(--sky-soft) 60%, var(--teal-wash) 100%);
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .event-row:hover{border-color:var(--teal); transform:translateY(-2px); box-shadow:0 12px 24px -16px rgb(14 60 68 / .28);}
+  .event-row-info{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:.3rem;}
+  .event-row-info strong{font-size:1.05rem; font-weight:600; line-height:1.3;}
+  .event-row-info strong a{text-decoration:none; color:inherit; transition:color .15s ease;}
+  .event-row-info strong a:hover{color:var(--teal-deep); text-decoration:underline;}
+  .event-row-info .meta{font-size:.86rem; color:var(--ink-soft);}
+  .event-row-actions{display:flex; align-items:center; gap:.6rem; flex:none;}
+  .no-results{display:none; color:var(--ink-soft); font-size:.95rem; padding:1.5rem 0;}
+
+  .date-badge{
+    flex:none; width:68px; display:flex; flex-direction:column; align-items:center;
+    border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#ffffff;
+    box-shadow:0 4px 10px -6px rgb(14 60 68 / .25);
+  }
+  .date-badge .badge-month{
+    width:100%; text-align:center; padding:.24rem 0; background:var(--teal-deep); color:#fff;
+    font-family:"Manrope", sans-serif; font-size:.72rem; letter-spacing:.07em; text-transform:uppercase; font-weight:600;
+  }
+  .date-badge .badge-day{
+    font-family:"Manrope", sans-serif; font-size:1.8rem; font-weight:700; color:var(--ink); line-height:1.15; padding-top:.32rem;
+  }
+  .date-badge .badge-year{font-size:.72rem; color:var(--ink-soft); padding-bottom:.4rem; letter-spacing:.02em;}
+
+  /* past events — falls back to the homepage's grid/slider event cards */
+  .past-section{border-top:1px solid var(--line);}
+  .event-slider-wrap{position:relative;}
+  .event-slider{
+    list-style:none; margin:0; padding:.2rem .2rem 1.2rem; display:flex; gap:1.5rem;
+    overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none;
+  }
+  .event-slider::-webkit-scrollbar{display:none;}
+  .event-card{scroll-snap-align:start; flex:0 0 calc((100% - 2 * 1.5rem) / 3);}
+  .event-card-inner{
+    display:flex; flex-direction:column; gap:1.2rem; height:100%;
+    padding:1.8rem 1.6rem; border:1px solid var(--line); border-radius:18px;
+    background:linear-gradient(160deg, #ffffff 0%, var(--sky-soft) 60%, var(--teal-wash) 100%);
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .event-card-inner:hover{border-color:var(--teal); transform:translateY(-3px); box-shadow:0 14px 28px -16px rgb(14 60 68 / .32);}
+  .event-card-inner strong{font-size:1.08rem; font-weight:600; line-height:1.35;}
+  .event-card-inner .meta{font-size:.85rem; color:var(--ink-soft);}
+  .event-card-actions{display:flex; align-items:center; gap:.6rem; margin-top:auto;}
+  .slider-nav{display:flex; gap:.6rem;}
+  .slider-btn{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:#ffffff;
+    display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--ink);
+    cursor:pointer; transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .slider-btn:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .slider-btn:active{transform:scale(.94);}
+
+  /* cta band — reused verbatim */
+  .cta-band-outer{position:relative; padding-block:1.4rem;}
+  .cta-band-outer .orb{
+    position:absolute; top:-60px; right:-40px; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, var(--cta), var(--teal) 60%, transparent 76%);
+    filter:blur(55px); opacity:.32; z-index:0; pointer-events:none;
+    animation:orbdrift 18s ease-in-out infinite alternate;
+  }
+  @keyframes orbdrift{from{transform:translate(0,0) scale(1);} to{transform:translate(-18px,16px) scale(1.1);}}
+  .cta-band{
+    position:relative; z-index:1; border-radius:12px; overflow:hidden; padding:4rem 3rem; isolation:isolate;
+    border:1px solid rgba(255,255,255,.14);
+    background:
+      radial-gradient(65% 130% at 100% 0%, rgb(0 175 205 / .35) 0%, transparent 60%),
+      radial-gradient(55% 110% at 0% 100%, rgb(14 138 156 / .3) 0%, transparent 55%),
+      linear-gradient(115deg, #0e2a2d, var(--ink) 55%, #0c2528);
+  }
+  .cta-band .content{position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:2.5rem; flex-wrap:wrap;}
+  .cta-band .copy{flex:1 1 0;}
+  .cta-band h2{color:#f2fbfc; font-size:clamp(1.9rem, 1.6vw + 1.3rem, 2.6rem); line-height:1.1;}
+  .cta-band .lede{margin-top:.9rem; color:rgb(242 251 252 / .78); font-size:1.02rem; max-width:44ch;}
+  .cta-band .action{flex:1 1 0; display:flex; flex-direction:column; align-items:flex-start; gap:.6rem;}
+  .cta-band .hint{font-size:.78rem; color:rgb(242 251 252 / .6);}
+
+  /* footer — reused verbatim */
+  footer{
+    background:linear-gradient(175deg, var(--teal-wash) 0%, var(--sky) 100%);
+    color:var(--ink); margin-top:1.5rem; border-radius:10px 10px 0 0; border:1px solid var(--line); border-bottom:none;
+  }
+  .footer-in{padding:3rem 2.6rem 1.8rem; display:grid; grid-template-columns:1.3fr 1fr 1.3fr; gap:3rem;}
+  footer p{color:var(--ink-soft); font-size:.9rem; margin-top:1rem; max-width:34ch;}
+  footer h3{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:1rem; font-weight:700;}
+  footer .flinks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.65rem; font-size:.92rem;}
+  footer .flinks a{text-decoration:none; color:var(--ink); transition:color .15s ease;}
+  footer .flinks a:hover{color:var(--teal-deep);}
+  .newsletter-form{display:flex; flex-direction:column; gap:.7rem; margin-top:.9rem;}
+  .field{display:flex; flex-direction:column; gap:.3rem;}
+  .field label{font-size:.72rem; letter-spacing:.04em; color:var(--ink-soft);}
+  .field input{
+    background:#ffffff; border:1px solid var(--line);
+    border-radius:5px; padding:.7rem .8rem; color:var(--ink); font-family:"Manrope", sans-serif; font-size:.92rem;
+  }
+  .field input::placeholder{color:color-mix(in srgb, var(--ink-soft) 70%, transparent);}
+  .field input:focus{border-color:var(--teal-deep);}
+  .newsletter-form .btn-solid{margin-top:.3rem; justify-content:center;}
+  .legal-bar{border-top:1px solid var(--line); padding:1.1rem 2.6rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.8rem; color:var(--ink-soft);}
+  .legal-bar a{text-decoration:none; color:inherit; margin-right:1.2rem;}
+  .legal-bar a:hover{color:var(--teal-deep);}
+  .legal-bar .social{display:inline-flex; align-items:center; gap:1rem;}
+  .legal-bar .social a{margin-right:0;}
+
+  @media (max-width:880px){
+    .nav-links, .nav-lang, .nav-login{display:none;}
+    .nav-toggle-btn{display:flex;}
+    main{padding-top:5.6rem;}
+    .event-row{flex-wrap:wrap;}
+    .event-row-actions{margin-left:calc(68px + 1.4rem);}
+    .event-card{flex:0 0 78%;}
+    .footer-in{grid-template-columns:1fr; gap:2.2rem;}
+    .cta-band .content{flex-direction:column; align-items:flex-start;}
+    .cta-band .action{width:100%;}
+  }
+  @media (max-width:480px){
+    .brand-word{display:none;}
+    .cta-band{padding:2.6rem 1.6rem;}
+    .event-row{padding:1.1rem 1.1rem;}
+    .event-row-actions{margin-left:0; margin-top:.4rem; flex-wrap:wrap;}
+    .event-card{flex:0 0 86%;}
+  }
+</style>
+
+<a class="skip-link" href="#main">Ga naar inhoud</a>
+<div class="concept-banner">Redesign-concept voor <b>HIMA Benelux</b> — niet de officiële website</div>
+
+<div class="nav-wrap">
+  <nav class="pill-nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+          <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+        </svg>
+      </span>
+      <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#doelstellingen">HIMA Benelux</a></li>
+      <li><a href="evenementen.html" aria-current="page">Evenementen</a></li>
+      <li><a href="index.html#leden">Leden</a></li>
+      <li><a href="lid-worden.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="nav-lang"><a href="#" aria-current="true">NL</a><span>·</span><a href="#">FR</a><span>·</span><a href="#">EN</a></span>
+      <a class="nav-login" href="inloggen.html">Inloggen</a>
+      <a class="btn btn-cta btn-sm" href="lid-worden.html">Word lid</a>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <label for="nav-toggle" class="nav-toggle-btn" aria-label="Menu openen"><span></span><span></span><span></span></label>
+  </nav>
+  <div class="mobile-panel">
+    <a href="index.html">Home</a>
+    <a href="index.html#doelstellingen">HIMA Benelux</a>
+    <a href="evenementen.html">Evenementen</a>
+    <a href="index.html#leden">Leden</a>
+    <a href="lid-worden.html#contact">Contact</a>
+    <a href="inloggen.html">Inloggen</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap">
+    <section class="page-hero">
+      <h1>Evenementen</h1>
+      <p class="page-hero-lede">Business Clubs, webinars, Retail Ontbijten en de reguliere events van HIMA Benelux — op één plek, filterbaar per maand.</p>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <section id="volgende">
+      <div class="section-head reveal">
+        <div>
+          <h2>Volgende evenementen</h2>
+        </div>
+      </div>
+
+      <div class="filter-bar-outer reveal">
+        <div class="filter-bar" id="filter-bar">
+          <button class="filter-pill is-active" data-filter="all" type="button">Alle events</button>
+          <span class="filter-chevron" aria-hidden="true">›</span>
+          <button class="filter-pill" data-filter="2026-09" type="button">Sep 2026</button>
+          <button class="filter-pill" data-filter="2026-10" type="button">Okt 2026</button>
+          <button class="filter-pill" data-filter="2026-11" type="button">Nov 2026</button>
+          <button class="filter-pill" data-filter="2026-12" type="button">Dec 2026</button>
+          <button class="filter-pill" data-filter="2027-01" type="button">Jan 2027</button>
+          <button class="filter-pill" data-filter="2027-02" type="button">Feb 2027</button>
+        </div>
+        <button class="filter-nav-btn" id="filter-next" type="button" aria-label="Meer maanden">›</button>
+      </div>
+
+      <ul class="event-list reveal-stagger" id="event-list">
+        <li class="event-row" data-month="2026-09">
+          <div class="date-badge"><span class="badge-month">Sep</span><span class="badge-day">24</span><span class="badge-year">2026</span></div>
+          <div class="event-row-info">
+            <strong><a href="after-summer-bbq.html">After Summer BBQ met Pascal Coppens</a></strong>
+            <span class="meta">17u00–22u00 · Welvaartstraat 14/1, 2200 Herentals</span>
+          </div>
+          <div class="event-row-actions">
+            <a class="btn btn-ghost btn-sm" href="after-summer-bbq.html">Details</a>
+            <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+          </div>
+        </li>
+        <li class="event-row" data-month="2026-10">
+          <div class="date-badge"><span class="badge-month">Okt</span><span class="badge-day">09</span><span class="badge-year">2026</span></div>
+          <div class="event-row-info">
+            <strong>Retail Ontbijt met Maxeda Platform &amp; Becom</strong>
+            <span class="meta">08u30–13u30 · Welvaartstraat 14/1, 2200 Herentals</span>
+          </div>
+          <div class="event-row-actions">
+            <a class="btn btn-ghost btn-sm" href="#">Details</a>
+            <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+          </div>
+        </li>
+        <li class="event-row" data-month="2026-11">
+          <div class="date-badge"><span class="badge-month">Nov</span><span class="badge-day">20</span><span class="badge-year">2026</span></div>
+          <div class="event-row-info">
+            <strong>6th Virtual DIY-Summit</strong>
+            <span class="meta">10u00–13u00 · Online, MS Teams</span>
+          </div>
+          <div class="event-row-actions">
+            <a class="btn btn-ghost btn-sm" href="#">Details</a>
+            <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+          </div>
+        </li>
+        <li class="event-row" data-month="2026-12">
+          <div class="date-badge"><span class="badge-month">Dec</span><span class="badge-day">05</span><span class="badge-year">2026</span></div>
+          <div class="event-row-info">
+            <strong>Werkgroep Verpakking &amp; Duurzaamheid</strong>
+            <span class="meta">09u00–12u00 · Welvaartstraat 14/1, 2200 Herentals</span>
+          </div>
+          <div class="event-row-actions">
+            <a class="btn btn-ghost btn-sm" href="#">Details</a>
+            <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+          </div>
+        </li>
+        <li class="event-row" data-month="2027-01">
+          <div class="date-badge"><span class="badge-month">Jan</span><span class="badge-day">14</span><span class="badge-year">2027</span></div>
+          <div class="event-row-info">
+            <strong>HIMA Ledendiner</strong>
+            <span class="meta">18u00–22u00 · De Casteleyn, 2000 Antwerpen</span>
+          </div>
+          <div class="event-row-actions">
+            <a class="btn btn-ghost btn-sm" href="#">Details</a>
+            <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+          </div>
+        </li>
+        <li class="event-row" data-month="2027-02">
+          <div class="date-badge"><span class="badge-month">Feb</span><span class="badge-day">04</span><span class="badge-year">2027</span></div>
+          <div class="event-row-info">
+            <strong>Trade Talk: Prijszetting in de DIY-sector</strong>
+            <span class="meta">14u00–16u00 · Online, MS Teams</span>
+          </div>
+          <div class="event-row-actions">
+            <a class="btn btn-ghost btn-sm" href="#">Details</a>
+            <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+          </div>
+        </li>
+      </ul>
+      <p class="no-results" id="no-results">Geen evenementen gevonden voor deze maand.</p>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <section class="past-section" id="afgelopen">
+      <div class="section-head quiet reveal">
+        <div>
+          <h2>Afgelopen events</h2>
+          <p class="sub">Een terugblik op eerdere HIMA Benelux-events.</p>
+        </div>
+      </div>
+      <div class="event-slider-wrap reveal">
+        <ul class="event-slider" id="past-slider">
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Jan</span><span class="badge-day">15</span><span class="badge-year">2026</span></div>
+              <strong>Nieuwjaarsreceptie 2026</strong>
+              <span class="meta">17u00–20u00 · Welvaartstraat 14/1, 2200 Herentals</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-ghost btn-sm event-recap" href="#">Bekijk terugblik</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Mrt</span><span class="badge-day">12</span><span class="badge-year">2026</span></div>
+              <strong>Webinar: Trends in Tuinretail</strong>
+              <span class="meta">10u00–11u30 · Online, MS Teams</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-ghost btn-sm event-recap" href="#">Bekijk terugblik</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Mei</span><span class="badge-day">22</span><span class="badge-year">2026</span></div>
+              <strong>Business Club Bouwmaterialen</strong>
+              <span class="meta">14u00–17u00 · Welvaartstraat 14/1, 2200 Herentals</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-ghost btn-sm event-recap" href="#">Bekijk terugblik</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="slider-nav">
+          <button class="slider-btn" id="past-prev" type="button" aria-label="Vorige afgelopen events">‹</button>
+          <button class="slider-btn" id="past-next" type="button" aria-label="Volgende afgelopen events">›</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="cta-band-outer wrap">
+    <div class="orb" aria-hidden="true"></div>
+    <div class="cta-band reveal">
+      <div class="content">
+        <div class="copy">
+          <h2>Wil je erbij zijn op het volgende event?</h2>
+          <p class="lede">Als lid krijg je toegang tot Business Clubs, webinars, Retail Ontbijten en alle reguliere events van HIMA Benelux.</p>
+        </div>
+        <div class="action">
+          <a class="btn btn-cta btn-lg" href="lid-worden.html">Word lid</a>
+          <span class="hint">Vrijblijvend gesprek, geen verplichtingen.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="wrap">
+  <footer id="contact">
+    <div class="footer-in">
+      <div>
+        <a class="brand" href="index.html" style="text-decoration:none;">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 100 100">
+              <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+              <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+            </svg>
+          </span>
+          <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+        </a>
+        <p>Vragen over een evenement? Neem contact op en we helpen je verder.</p>
+      </div>
+      <div>
+        <h3>Snel navigeren</h3>
+        <ul class="flinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#volgende">Volgende evenementen</a></li>
+          <li><a href="#afgelopen">Afgelopen events</a></li>
+          <li><a href="tier-quiz.html">Tarievenquiz</a></li>
+          <li><a href="lid-worden.html">Word lid</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Schrijf je in op onze nieuwsbrief</h3>
+        <form class="newsletter-form" onsubmit="return false;">
+          <div class="field">
+            <label for="nl-voornaam">Voornaam</label>
+            <input id="nl-voornaam" name="voornaam" type="text" autocomplete="given-name" placeholder="Voornaam">
+          </div>
+          <div class="field">
+            <label for="nl-achternaam">Achternaam</label>
+            <input id="nl-achternaam" name="achternaam" type="text" autocomplete="family-name" placeholder="Achternaam">
+          </div>
+          <div class="field">
+            <label for="nl-email">E-mail</label>
+            <input id="nl-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.be" required>
+          </div>
+          <button class="btn btn-solid" type="submit">Versturen</button>
+        </form>
+      </div>
+    </div>
+    <div class="legal-bar">
+      <div><a href="#">Privacybeleid</a><a href="#">Cookiebeleid</a><a href="#">Algemene voorwaarden</a></div>
+      <span class="social"><a href="#" aria-label="HIMA Benelux op LinkedIn">LinkedIn</a><span>webdesign © Sanmax Projects</span></span>
+    </div>
+  </footer>
+</div>
+
+<noscript><style>.reveal, .reveal-stagger > *{opacity:1!important; transform:none!important;}</style></noscript>
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!('IntersectionObserver' in window)) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('reveal-stagger')) {
+          Array.prototype.forEach.call(entry.target.children, function(child){ child.classList.add('is-visible'); });
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+  Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var bar = document.getElementById('filter-bar');
+  var next = document.getElementById('filter-next');
+  var rows = document.querySelectorAll('.event-row');
+  var noResults = document.getElementById('no-results');
+  if (!bar) return;
+  next.addEventListener('click', function(){ bar.scrollBy({left: 220, behavior: 'smooth'}); });
+  bar.addEventListener('click', function(e){
+    var pill = e.target.closest('.filter-pill');
+    if (!pill) return;
+    Array.prototype.forEach.call(bar.querySelectorAll('.filter-pill'), function(p){ p.classList.remove('is-active'); });
+    pill.classList.add('is-active');
+    var filter = pill.getAttribute('data-filter');
+    var visible = 0;
+    Array.prototype.forEach.call(rows, function(row){
+      var match = filter === 'all' || row.getAttribute('data-month') === filter;
+      row.hidden = !match;
+      if (match) visible++;
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+  });
+})();
+</script>
+<script>
+(function(){
+  var slider = document.getElementById('past-slider');
+  var prev = document.getElementById('past-prev');
+  var next = document.getElementById('past-next');
+  if (!slider || !prev || !next) return;
+  function step(){
+    var card = slider.querySelector('.event-card');
+    return card ? card.getBoundingClientRect().width + 24 : slider.clientWidth;
+  }
+  prev.addEventListener('click', function(){ slider.scrollBy({left: -step(), behavior: 'smooth'}); });
+  next.addEventListener('click', function(){ slider.scrollBy({left: step(), behavior: 'smooth'}); });
+})();
+</script>

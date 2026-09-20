@@ -1,0 +1,974 @@
+<!doctype html>
+<title>HIMA Benelux — Redesign Concept</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#dcf1f4;
+    --sky-soft:#eef8f9;
+    --paper:#ffffff;
+    --ink:#132c31;
+    --ink-soft:#3d565b;
+    --line:#cfe6e9;
+    --teal:#0e8a9c;
+    --teal-deep:#0a6c7b;
+    --teal-wash:#e4f4f6;
+    --amber:#8a611c;
+    --bronze:#8a5a3a;
+    --silver:#8b95a0;
+    --cta:#00afcd;
+    --cta-deep:#07a0b8;
+    --cta-wash:#e3f7fa;
+    --cta-wash-deep:#c3edf4;
+    --cta-line:#9fdfea;
+    --cta-btn:#008098;
+    --cta-btn-hover:#006f86;
+    --focus:#0e8a9c;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  body{
+    overflow-x:hidden;
+    margin:0;
+    background-color:#ffffff;
+    background-image:
+      radial-gradient(130% 55% at 50% -8%, #dcf1f4 0%, transparent 60%),
+      radial-gradient(80% 40% at 90% 15%, rgb(14 138 156 / .14), transparent 65%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    padding-inline:20px;
+  }
+  .wrap{max-width:1220px;margin-inline:auto;}
+  h1,h2,h3{
+    font-family:"Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .mono{font-family:"Manrope", ui-sans-serif, system-ui, sans-serif; font-variant-numeric:tabular-nums;}
+
+  ::selection{background:var(--teal-wash); color:var(--ink);}
+  ::-webkit-scrollbar{width:12px; height:12px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:color-mix(in srgb, var(--teal) 45%, transparent); border-radius:8px; border:3px solid var(--paper);}
+  ::-webkit-scrollbar-thumb:hover{background:var(--teal);}
+
+  a.skip-link{
+    position:absolute; left:-999px; top:auto;
+    background:var(--teal-deep); color:#fff; padding:.7em 1.1em; z-index:1000; border-radius:0 0 6px 0;
+  }
+  a.skip-link:focus{left:0; top:0;}
+
+  :focus-visible{outline:2.5px solid var(--focus); outline-offset:3px; border-radius:2px;}
+
+  /* entrance (hero — always visible at rest, this only choreographs the first paint) */
+  @keyframes rise{from{opacity:.001; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .hero h1, .hero-lede, .hero-actions, .hero-art{
+    animation:rise .6s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero-lede{animation-delay:.08s;}
+  .hero-actions{animation-delay:.16s;}
+  .hero-art{animation-delay:.1s;}
+
+  /* scroll reveal — one consistent motion system for everything below the fold */
+  .reveal, .reveal-stagger > *{
+    opacity:0; transform:translateY(16px);
+    transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.is-visible, .reveal-stagger > *.is-visible{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *:nth-child(1){transition-delay:0s;}
+  .reveal-stagger > *:nth-child(2){transition-delay:.07s;}
+  .reveal-stagger > *:nth-child(3){transition-delay:.14s;}
+  .reveal-stagger > *:nth-child(4){transition-delay:.21s;}
+  .reveal-stagger > *:nth-child(5){transition-delay:.28s;}
+  .reveal-stagger > *:nth-child(6){transition-delay:.35s;}
+  .reveal-stagger > *:nth-child(7){transition-delay:.42s;}
+  .reveal-stagger > *:nth-child(8){transition-delay:.49s;}
+  .reveal-stagger > *:nth-child(9){transition-delay:.56s;}
+  .reveal-stagger > *:nth-child(10){transition-delay:.63s;}
+  .reveal-stagger > *:nth-child(11){transition-delay:.7s;}
+  .reveal-stagger > *:nth-child(12){transition-delay:.77s;}
+  .reveal-stagger > *:nth-child(13){transition-delay:.84s;}
+  .reveal-stagger > *:nth-child(14){transition-delay:.91s;}
+  .reveal-stagger > *:nth-child(15){transition-delay:.98s;}
+  .no-js .reveal, .no-js .reveal-stagger > *{opacity:1; transform:none;}
+
+  /* concept banner */
+  .concept-banner{
+    background:var(--teal-wash); color:var(--ink-soft); text-align:center; border-bottom:1px solid var(--line);
+    font-size:.78rem; letter-spacing:.04em; padding:.55rem 1rem;
+    margin-inline:-20px; padding-inline:20px;
+  }
+  .concept-banner b{color:var(--teal-deep);}
+
+  /* floating glass pill nav */
+  .nav-wrap{position:fixed; top:52px; left:0; right:0; z-index:200; display:flex; flex-direction:column; align-items:center; gap:.6rem; padding-inline:20px; pointer-events:none;}
+  .pill-nav{
+    pointer-events:auto; width:100%; max-width:1220px;
+    display:flex; align-items:center; justify-content:space-between; gap:1.6rem;
+    padding:.5rem .6rem .5rem 1rem; border-radius:999px;
+    background:rgba(255,255,255,.68); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 1px 1px rgb(19 44 49 / .04), 0 14px 32px -14px rgb(19 44 49 / .22);
+    transition:box-shadow .2s ease;
+  }
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none; flex:none;}
+  .brand-mark{width:40px;height:40px;border-radius:50%; background:var(--teal); display:flex; align-items:center; justify-content:center; flex:none; box-shadow:0 4px 12px -5px rgb(14 60 68 / .4);}
+  .brand-mark svg{width:22px;height:22px;}
+  .brand-word{font-size:.72rem; line-height:1.34; font-weight:800; letter-spacing:.01em; color:var(--ink); text-transform:uppercase;}
+  .brand-word .tag{display:block; margin-top:.22rem; font-weight:700; font-size:.7rem; letter-spacing:.13em; color:var(--teal-deep);}
+
+  .nav-links{display:flex; align-items:center; gap:1.7rem; list-style:none; margin:0; padding:0; font-size:.88rem; font-weight:500;}
+  .nav-links a{text-decoration:none; position:relative; padding-block:.3rem;}
+  .nav-links a::after{content:"";position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--teal); transform:scaleX(0); transform-origin:left; transition:transform .2s ease;}
+  .nav-links a:hover::after{transform:scaleX(1);}
+  .nav-links a[aria-current="page"]{color:var(--teal-deep); font-weight:600;}
+  .nav-links a[aria-current="page"]::after{transform:scaleX(1);}
+  .nav-actions{display:flex; align-items:center; gap:1.1rem; flex:none;}
+  .nav-lang{display:flex; align-items:center; gap:.3rem; font-size:.78rem; color:var(--ink-soft);}
+  .nav-lang a{text-decoration:none; transition:color .15s ease;}
+  .nav-lang a:hover{color:var(--teal);}
+  .nav-lang a[aria-current="true"]{color:var(--ink); font-weight:600;}
+  .nav-lang span{opacity:.4;}
+  .nav-login{font-size:.85rem; font-weight:600; text-decoration:none; color:var(--ink-soft); transition:color .15s ease; white-space:nowrap;}
+  .nav-login:hover{color:var(--teal-deep);}
+
+  .nav-toggle-input{position:absolute; opacity:0; pointer-events:none;}
+  .nav-toggle-btn{display:none; flex:none; width:36px; height:36px; border-radius:50%; align-items:center; justify-content:center; gap:4px; flex-direction:column; cursor:pointer; background:transparent; border:1px solid var(--line);}
+  .nav-toggle-btn span{display:block; width:15px; height:2px; background:var(--ink); border-radius:2px; transition:transform .2s ease, opacity .2s ease;}
+  .mobile-panel{
+    pointer-events:auto; display:none; flex-direction:column; gap:.2rem;
+    width:100%; max-width:340px; padding:.9rem 1.1rem; border-radius:20px;
+    background:rgba(255,255,255,.85); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+    border:1px solid rgba(255,255,255,.6); box-shadow:0 14px 32px -14px rgb(19 44 49 / .25);
+  }
+  .mobile-panel a{text-decoration:none; padding:.6rem .3rem; font-size:.95rem; font-weight:500; border-bottom:1px solid var(--line);}
+  .mobile-panel a:last-child{border-bottom:none;}
+  .nav-wrap:has(.nav-toggle-input:checked) .mobile-panel{display:flex;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(2){opacity:0;}
+  .nav-wrap:has(.nav-toggle-input:checked) .nav-toggle-btn span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  /* button system — cta (bright brand blue) is reserved for the membership ask;
+     muted teal/ghost carry every other action so the ask stays visually singular. */
+  .btn{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:"Manrope", sans-serif; font-weight:700; font-size:.9rem;
+    padding:.75rem 1.35rem; border-radius:999px; text-decoration:none; border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+    cursor:pointer; white-space:nowrap;
+  }
+  .btn:active{transform:translateY(1px) scale(.99);}
+  .btn-cta{background:var(--cta-btn); color:#fff; box-shadow:0 8px 20px -8px rgb(0 128 152 / .4);}
+  .btn-cta:hover{background:var(--cta-btn-hover); box-shadow:0 10px 22px -8px rgb(0 128 152 / .45);}
+  .btn-solid{background:var(--teal-deep); color:#fff; box-shadow:0 5px 14px -7px rgb(14 138 156 / .3);}
+  .btn-solid:hover{background:#085a66;}
+  .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .btn-sm{padding:.58rem 1.35rem; font-size:.82rem;}
+  .btn-lg{padding:.95rem 2rem; font-size:1rem;}
+  .link-arrow{display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; font-weight:600; color:var(--teal-deep); border-bottom:1px solid transparent; transition:border-color .15s ease, gap .15s ease;}
+  .link-arrow:hover{border-color:var(--teal-deep); gap:.6rem;}
+
+  /* hero */
+  main{padding-top:6.4rem;}
+  .hero{display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:stretch; padding-block:2.6rem 3.5rem;}
+  .hero h1{font-size:clamp(1.9rem, 2.4vw + 1rem, 2.85rem); line-height:1.12;}
+  .hero-lede{max-width:46ch; margin-top:1.4rem; color:var(--ink-soft); font-size:1.08rem;}
+  .hero-actions{display:flex; align-items:center; gap:1.7rem; margin-top:2.3rem; flex-wrap:wrap;}
+
+  .hero-art{position:relative;}
+  .hero-art .glow{position:absolute; top:-14%; right:-12%; width:60%; aspect-ratio:1/1; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--cta), var(--teal) 65%, transparent 78%); filter:blur(46px); opacity:.3; z-index:0; pointer-events:none;}
+  .hero-art .panel{position:relative; height:100%; border-radius:10px; overflow:hidden; border:1px solid var(--line);}
+  .hero-art .hero-photo{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .hero-art .hero-photo-scrim{position:absolute; inset:0; background:linear-gradient(0deg, rgb(10 30 33 / .58) 0%, rgb(10 30 33 / .05) 40%, transparent 65%);}
+  .hero-art figcaption{position:absolute; left:1.3rem; bottom:1.2rem; right:1.3rem; color:#f2fbfc; font-family:"Manrope", sans-serif; font-size:.72rem; letter-spacing:.03em; opacity:.95;}
+
+  /* stats banner — simple, three numbers, count up on scroll into view */
+  .stats-banner{display:flex; flex-wrap:wrap; justify-content:space-between; gap:1.5rem; padding-block:1.6rem 2.6rem;}
+
+  .quiz-teaser{
+    position:relative; overflow:hidden; isolation:isolate;
+    display:flex; align-items:center; gap:1.4rem; text-decoration:none; color:var(--ink);
+    padding:1.5rem 1.8rem; border:1px solid var(--cta-line); border-radius:18px;
+    background:linear-gradient(120deg, var(--cta-wash) 0%, var(--cta-wash-deep) 100%);
+    box-shadow:0 14px 28px -18px rgb(0 128 152 / .35);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .quiz-teaser::before{
+    content:""; position:absolute; top:-55%; right:-6%; width:240px; height:240px; border-radius:50%;
+    background:radial-gradient(circle, var(--cta) 0%, transparent 70%); opacity:.28; z-index:-1; pointer-events:none;
+  }
+  .quiz-teaser:hover{transform:translateY(-3px); box-shadow:0 20px 36px -16px rgb(0 128 152 / .4);}
+  .quiz-teaser-icon{
+    flex:none; width:52px; height:52px; border-radius:50%;
+    background:var(--cta-btn); color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 18px -8px rgb(0 128 152 / .5);
+  }
+  .quiz-teaser-icon svg{width:24px; height:24px;}
+  .quiz-teaser-text{flex:1 1 auto; display:flex; flex-direction:column; gap:.25rem;}
+  .quiz-teaser-text strong{font-size:1.15rem; font-weight:800; color:var(--ink); letter-spacing:-.01em;}
+  .quiz-teaser-text .sub{color:var(--ink-soft); font-size:.92rem;}
+  .quiz-teaser-cta{
+    flex:none; display:inline-flex; align-items:center; gap:.5rem;
+    padding:.75rem 1.4rem; border-radius:999px; background:var(--cta-btn); color:#fff;
+    font-weight:700; font-size:.9rem; box-shadow:0 8px 18px -8px rgb(0 128 152 / .4);
+    transition:background-color .15s ease, transform .15s ease;
+  }
+  .quiz-teaser:hover .quiz-teaser-cta{background:var(--cta-btn-hover); transform:translateX(3px);}
+  .stat{display:flex; flex-direction:column; align-items:center; gap:.3rem;}
+  .stat-num{font-family:"Manrope", sans-serif; font-weight:700; font-size:2.1rem; color:var(--cta-btn); font-variant-numeric:tabular-nums; line-height:1;}
+  .stat-label{font-size:.88rem; color:var(--ink-soft);}
+
+  /* sections generic */
+  section{padding-block:3.6rem;}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; margin-bottom:2.4rem; flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(1.6rem, 1.1vw + 1.2rem, 2.1rem);}
+  .section-head .sub{color:var(--ink-soft); max-width:52ch; margin-top:.5rem;}
+  /* quiet sections (Operate/Read register): events, quicklinks, partners —
+     deliberately smaller and denser than the persuade moments around them */
+  .section-head.quiet{margin-bottom:1.6rem;}
+  .section-head.quiet h2{font-size:clamp(1.2rem, .5vw + 1.05rem, 1.4rem); font-weight:700; letter-spacing:-.01em;}
+
+  /* objectives */
+  .objectives{border-top:1px solid var(--line); padding-top:4rem; padding-bottom:4rem;}
+  .objectives-grid{display:grid; grid-template-columns:1.15fr 1fr 1fr; grid-template-rows:auto auto; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .obj{background:#ffffff; padding:2.1rem 2rem; position:relative;}
+  .obj .icon{width:34px;height:34px;color:var(--teal-deep);}
+  .obj h3{font-size:1.15rem; font-weight:700; letter-spacing:-.01em; margin-top:1.1rem;}
+  .obj p{margin-top:.55rem; color:var(--ink-soft); font-size:.92rem;}
+  .obj--lead{
+    grid-row:1 / span 2; display:flex; flex-direction:column; justify-content:space-between;
+    background:linear-gradient(165deg, var(--cta-wash) 0%, #eefbfd 55%, #ffffff 100%);
+    border:1px solid var(--cta-line);
+    margin:-1px 0 -1px -1px;
+    border-radius:9px 0 0 9px;
+  }
+  .obj--lead h3{color:var(--ink); font-size:1.55rem; margin-top:0;}
+  .obj--lead p{color:var(--ink-soft); margin-top:.7rem;}
+  .obj--lead .btn{margin-top:1.7rem; align-self:flex-start;}
+
+  /* two col: events + quicklinks — quiet register, tighter rhythm */
+  /* member categories — flat 5x3 icon grid */
+  .categories-section{border-top:1px solid var(--line); padding-top:2.6rem; padding-bottom:2.6rem;}
+  .category-grid{
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+  }
+  .category-tile{
+    background:#ffffff; display:flex; flex-direction:column; align-items:flex-start; gap:.8rem;
+    padding:1.3rem 1.15rem; transition:background-color .15s ease;
+  }
+  .category-tile:hover{background:var(--teal-wash);}
+  .category-tile .icon{width:26px; height:26px; color:var(--teal-deep); flex:none;}
+  .category-tile span{font-size:.85rem; font-weight:500; color:var(--ink); line-height:1.35;}
+
+  .events-section{border-top:1px solid var(--line); padding-top:2.6rem; padding-bottom:2.6rem;}
+  .event-slider-wrap{position:relative;}
+  .event-slider{
+    list-style:none; margin:0; padding:.2rem .2rem 1.2rem; display:flex; gap:1.5rem;
+    overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none;
+  }
+  .event-slider::-webkit-scrollbar{display:none;}
+  /* three cards fill the visible row like a grid; the rest sit offscreen until scrolled */
+  .event-card{scroll-snap-align:start; flex:0 0 calc((100% - 2 * 1.5rem) / 3);}
+  .event-card-inner{
+    display:flex; flex-direction:column; gap:1.2rem; height:100%;
+    padding:1.8rem 1.6rem; border:1px solid var(--line); border-radius:18px;
+    background:linear-gradient(160deg, #ffffff 0%, var(--sky-soft) 60%, var(--teal-wash) 100%);
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .event-card-inner:hover{border-color:var(--teal); transform:translateY(-3px); box-shadow:0 14px 28px -16px rgb(14 60 68 / .32);}
+  .date-badge{
+    flex:none; width:68px; display:flex; flex-direction:column; align-items:center;
+    border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#ffffff;
+    box-shadow:0 4px 10px -6px rgb(14 60 68 / .25);
+  }
+  .date-badge .badge-month{
+    width:100%; text-align:center; padding:.24rem 0; background:var(--teal-deep); color:#fff;
+    font-family:"Manrope", sans-serif; font-size:.72rem; letter-spacing:.07em; text-transform:uppercase; font-weight:600;
+  }
+  .date-badge .badge-day{
+    font-family:"Manrope", sans-serif; font-size:1.8rem; font-weight:700; color:var(--ink); line-height:1.15; padding-top:.32rem;
+  }
+  .date-badge .badge-year{font-size:.72rem; color:var(--ink-soft); padding-bottom:.4rem; letter-spacing:.02em;}
+  .event-card-inner strong{font-size:1.08rem; font-weight:600; line-height:1.35;}
+  .event-card-inner strong a{text-decoration:none; color:inherit; transition:color .15s ease;}
+  .event-card-inner strong a:hover{color:var(--teal-deep); text-decoration:underline;}
+  .event-card-inner .meta{font-size:.85rem; color:var(--ink-soft);}
+  .event-card-actions{display:flex; align-items:center; gap:.6rem; margin-top:auto;}
+  .slider-nav{display:flex; gap:.6rem;}
+  .slider-btn{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:#ffffff;
+    display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--ink);
+    cursor:pointer; transition:border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .slider-btn:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .slider-btn:active{transform:scale(.94);}
+
+  /* cta band — the singular conversion moment: reversed to a dark ink ground for maximum contrast
+     against the rest of the light page, with a slow ambient gradient orb behind it
+     (the one deliberate ambient-motion moment on the page) */
+  .cta-band-outer{position:relative; padding-block:1.4rem;}
+  .cta-band-outer .orb{
+    position:absolute; top:-60px; right:-40px; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, var(--cta), var(--teal) 60%, transparent 76%);
+    filter:blur(55px); opacity:.32; z-index:0; pointer-events:none;
+    animation:orbdrift 18s ease-in-out infinite alternate;
+  }
+  @keyframes orbdrift{from{transform:translate(0,0) scale(1);} to{transform:translate(-18px,16px) scale(1.1);}}
+  .cta-band{
+    position:relative; z-index:1; border-radius:12px; overflow:hidden; padding:4rem 3rem; isolation:isolate;
+    border:1px solid rgba(255,255,255,.14);
+    background:
+      radial-gradient(65% 130% at 100% 0%, rgb(0 175 205 / .35) 0%, transparent 60%),
+      radial-gradient(55% 110% at 0% 100%, rgb(14 138 156 / .3) 0%, transparent 55%),
+      linear-gradient(115deg, #0e2a2d, var(--ink) 55%, #0c2528);
+  }
+  .cta-band .content{position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:2.5rem; flex-wrap:wrap;}
+  .cta-band .copy{flex:1 1 0; max-width:none;}
+  .cta-band h2{color:#f2fbfc; font-size:clamp(1.9rem, 1.6vw + 1.3rem, 2.6rem); line-height:1.1;}
+  .cta-band .lede{margin-top:.9rem; color:rgb(242 251 252 / .78); font-size:1.02rem; max-width:44ch;}
+  .cta-band .action{flex:1 1 0; display:flex; flex-direction:column; align-items:flex-start; gap:.6rem;}
+  .cta-band .hint{font-size:.78rem; color:rgb(242 251 252 / .6);}
+
+  /* member marquee — two rows drifting in opposite directions, dummy entries for a demo reel */
+  #leden{border-top:1px solid var(--line); padding-top:2.6rem; padding-bottom:2.6rem;}
+  .member-marquee{
+    display:flex; flex-direction:column; gap:1.8rem;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .marquee-row{overflow:hidden;}
+  .marquee-track{display:flex; align-items:flex-start; gap:3rem; width:max-content;}
+  .marquee-track--left{animation:marqueeLeft 26s linear infinite;}
+  .marquee-track--right{animation:marqueeRight 26s linear infinite;}
+  .marquee-row:hover .marquee-track{animation-play-state:paused;}
+  @keyframes marqueeLeft{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @keyframes marqueeRight{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+  .member-item{
+    flex:none; display:flex; align-items:center; justify-content:center;
+    width:150px; height:64px; padding:.6rem 1rem; border-radius:12px;
+    border:1px solid var(--line); background:#ffffff;
+  }
+  .member-item img{max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;}
+  @media (prefers-reduced-motion: reduce){ .marquee-track{animation:none !important;} }
+
+  /* partners by level — duplicate section as a slider, one slide per tier,
+     tile size stepping down gold > silver > bronze */
+  .partners-tier-section{border-top:1px solid var(--line); padding-top:2.6rem; padding-bottom:2.6rem;}
+  /* rows stack gold > silver > bronze; every row spans the full content width,
+     split evenly between its logos — size comes from row height, not width */
+  .tier-rows{display:flex; flex-direction:column; gap:1.1rem;}
+  .tier-row{position:relative; display:flex; gap:1rem;}
+  .tier-logo{
+    flex:1 1 0; display:flex; align-items:center; justify-content:center;
+    padding:16px 20px; background:var(--sky-soft); border-radius:14px;
+    box-shadow:0 3px 10px -6px rgb(19 44 49 / .16);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .tier-logo:hover{transform:translateY(-2px); box-shadow:0 10px 20px -10px rgb(19 44 49 / .28);}
+  .tier-logo img{max-width:65%; max-height:65%; object-fit:contain;}
+  .tier-logo svg.partner-mark{max-width:72%; max-height:72%; width:auto; height:auto;}
+  .tier-row--gold{height:210px;}
+  .tier-row--silver{height:152px;}
+  .tier-row--bronze{height:110px;}
+  .tier-badge{
+    position:absolute; top:-12px; right:-12px; z-index:2;
+    width:32px; height:32px; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 10px -5px rgb(19 44 49 / .35);
+  }
+  .tier-badge svg{width:15px; height:15px;}
+  .tier-badge--gold{background:var(--amber);}
+  .tier-badge--silver{background:var(--silver);}
+  .tier-badge--bronze{background:var(--bronze);}
+  /* footer */
+  footer{
+    background:linear-gradient(175deg, var(--teal-wash) 0%, var(--sky) 100%);
+    color:var(--ink); margin-top:1.5rem; border-radius:10px 10px 0 0; border:1px solid var(--line); border-bottom:none;
+  }
+  .footer-in{padding:3rem 2.6rem 1.8rem; display:grid; grid-template-columns:1.3fr 1fr 1.3fr; gap:3rem;}
+  footer p{color:var(--ink-soft); font-size:.9rem; margin-top:1rem; max-width:34ch;}
+  footer h3{font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:1rem; font-weight:700;}
+  footer .flinks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.65rem; font-size:.92rem;}
+  footer .flinks a{text-decoration:none; color:var(--ink); transition:color .15s ease;}
+  footer .flinks a:hover{color:var(--teal-deep);}
+  .newsletter-form{display:flex; flex-direction:column; gap:.7rem; margin-top:.9rem;}
+  .field{display:flex; flex-direction:column; gap:.3rem;}
+  .field label{font-size:.72rem; letter-spacing:.04em; color:var(--ink-soft);}
+  .field input{
+    background:#ffffff; border:1px solid var(--line);
+    border-radius:5px; padding:.7rem .8rem; color:var(--ink); font-family:"Manrope", sans-serif; font-size:.92rem;
+  }
+  .field input::placeholder{color:color-mix(in srgb, var(--ink-soft) 70%, transparent);}
+  .field input:focus{border-color:var(--teal-deep);}
+  .newsletter-form .btn-solid{margin-top:.3rem; justify-content:center;}
+  .legal-bar{border-top:1px solid var(--line); padding:1.1rem 2.6rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.8rem; color:var(--ink-soft);}
+  .legal-bar a{text-decoration:none; color:inherit; margin-right:1.2rem;}
+  .legal-bar a:hover{color:var(--teal-deep);}
+  .legal-bar .social{display:inline-flex; align-items:center; gap:1rem;}
+  .legal-bar .social a{margin-right:0;}
+
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr; padding-block:1.6rem 2rem;}
+    .hero-art{order:-1;}
+    .hero-art .panel{height:auto; aspect-ratio:16/9;}
+    .nav-links, .nav-lang, .nav-login{display:none;}
+    .nav-toggle-btn{display:flex;}
+    main{padding-top:5.6rem;}
+    .objectives-grid{grid-template-columns:1fr 1fr;}
+    .obj--lead{grid-row:auto; grid-column:1 / -1; border-radius:9px; margin:-1px;}
+    .footer-in{grid-template-columns:1fr; gap:2.2rem;}
+    .cta-band .content{flex-direction:column; align-items:flex-start;}
+    .cta-band .action{width:100%;}
+    .category-grid{grid-template-columns:repeat(3, 1fr);}
+    .tier-row--gold{height:170px;}
+    .tier-row--silver{height:130px;}
+    .tier-row--bronze{height:96px;}
+    .event-card{flex:0 0 78%;}
+    .quiz-teaser{flex-wrap:wrap;}
+    .quiz-teaser-cta{width:100%; justify-content:center;}
+  }
+  @media (max-width:480px){
+    .objectives-grid{grid-template-columns:1fr;}
+    .cta-band{padding:2.6rem 1.6rem;}
+    .quiz-teaser{padding:1.3rem 1.4rem;}
+    .brand-word{display:none;}
+    .category-grid{grid-template-columns:repeat(2, 1fr);}
+    .event-card{flex:0 0 86%;}
+  }
+</style>
+
+<a class="skip-link" href="#main">Ga naar inhoud</a>
+<div class="concept-banner">Redesign-concept voor <b>HIMA Benelux</b> — niet de officiële website</div>
+
+<div class="nav-wrap">
+  <nav class="pill-nav" aria-label="Hoofdnavigatie">
+    <a class="brand" href="#main">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+          <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+        </svg>
+      </span>
+      <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#main" aria-current="page">Home</a></li>
+      <li><a href="#doelstellingen">HIMA Benelux</a></li>
+      <li><a href="evenementen.html">Evenementen</a></li>
+      <li><a href="#leden">Leden</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="nav-lang"><a href="#" aria-current="true">NL</a><span>·</span><a href="#">FR</a><span>·</span><a href="#">EN</a></span>
+      <a class="nav-login" href="inloggen.html">Inloggen</a>
+      <a class="btn btn-cta btn-sm" href="lid-worden.html">Word lid</a>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <label for="nav-toggle" class="nav-toggle-btn" aria-label="Menu openen"><span></span><span></span><span></span></label>
+  </nav>
+  <div class="mobile-panel">
+    <a href="#main">Home</a>
+    <a href="#doelstellingen">HIMA Benelux</a>
+    <a href="evenementen.html">Evenementen</a>
+    <a href="#leden">Leden</a>
+    <a href="#contact">Contact</a>
+    <a href="inloggen.html">Inloggen</a>
+  </div>
+</div>
+
+<main id="main">
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1>Dé stem van de DIY-, tuin- en homeimprovementsector.</h1>
+        <p class="hero-lede">Als fabrikant of leverancier sta je sterker met branchegenoten naast je. HIMA Benelux verbindt je met de rest van de sector: via werkgroepen, marktdata en één gebundelde stem richting retail.</p>
+        <div class="hero-actions">
+          <a class="btn btn-cta btn-lg" href="lid-worden.html">Word lid van HIMA Benelux</a>
+          <a class="link-arrow" href="#doelstellingen">Ontdek onze doelstellingen <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="glow" aria-hidden="true"></div>
+        <figure class="panel" id="hero-panel">
+          <img class="hero-photo" src="assets/hero-home.png" alt="Miniatuurfiguren rond een lampje-icoon op een notitieblok — samen ideeën uitwerken voor de sector">
+          <div class="hero-photo-scrim" aria-hidden="true"></div>
+          <figcaption id="hero-caption">Fabrikanten · Leveranciers · Retailers — één netwerk</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <div class="stats-banner reveal">
+      <div class="stat"><span class="stat-num" data-count="359">0</span><span class="stat-label">leden</span></div>
+      <div class="stat"><span class="stat-num" data-count="108">0</span><span class="stat-label">bedrijven</span></div>
+      <div class="stat"><span class="stat-num" data-count="100" data-suffix="%">0</span><span class="stat-label">transparant</span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="objectives" id="doelstellingen">
+      <div class="section-head reveal">
+        <div>
+          <h2>Onze doelstellingen</h2>
+          <p class="sub">Vier dingen waar we dagelijks mee bezig zijn. Als lid sluit je daar meteen bij aan.</p>
+        </div>
+      </div>
+      <div class="objectives-grid reveal-stagger">
+        <div class="obj obj--lead">
+          <div>
+            <h3>Als lid krijg je toegang tot alle vier</h3>
+            <p>Van werkgroep tot marktdata: als lid sta je er middenin, niet aan de zijlijn.</p>
+          </div>
+          <a class="btn btn-cta" href="lid-worden.html">Word lid</a>
+        </div>
+        <div class="obj">
+          <svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="4"/><circle cx="22" cy="9" r="3"/><path d="M4 26c0-4.4 3.6-7 7-7s7 2.6 7 7"/><path d="M17 22c1-2.6 3.3-4 5.5-4 3 0 5.5 2 5.5 6"/></svg>
+          <h3>Werkgroepen per vakgebied</h3>
+          <p>Je deelt rechtstreeks kennis en ervaring met collega's uit de sector: geen theorie, maar wat er echt speelt.</p>
+        </div>
+        <div class="obj">
+          <svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="16" r="4"/><circle cx="24" cy="16" r="4"/><path d="M12 16h8"/></svg>
+          <h3>Samenwerking met andere federaties</h3>
+          <p>We werken actief samen met zusterfederaties in de Benelux en daarbuiten, zodat je stem verder reikt dan onze eigen sector.</p>
+        </div>
+        <div class="obj">
+          <svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 27V13"/><path d="M14 27V6"/><path d="M23 27V17"/><path d="M4 27h24"/></svg>
+          <h3>Marktdata die klopt</h3>
+          <p>Betrouwbare cijfers over de sector, zodat je beslissingen neemt op basis van feiten — niet van giswerk.</p>
+        </div>
+        <div class="obj">
+          <svg class="icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="16" r="11"/><path d="M16 5c3 3 4.5 7 4.5 11S19 24 16 27M16 5c-3 3-4.5 7-4.5 11S13 24 16 27M5.5 16h21"/></svg>
+          <h3>Eén sterke stem</h3>
+          <p>Fabrikanten en leveranciers worden niet elk apart, maar samen gehoord door retail en overheid.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <a class="quiz-teaser reveal" href="tier-quiz.html">
+      <span class="quiz-teaser-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="9"/></svg>
+      </span>
+      <span class="quiz-teaser-text">
+        <strong>Welk lidmaatschap past bij uw bedrijf?</strong>
+        <span class="sub">Beantwoord 4 korte vragen en ontdek het in 1 minuut.</span>
+      </span>
+      <span class="quiz-teaser-cta">Doe de quiz <span aria-hidden="true">→</span></span>
+    </a>
+  </div>
+
+  <div class="wrap">
+    <section class="categories-section" id="categorieen">
+      <div class="section-head quiet reveal">
+        <div>
+          <h2>Lidmaatschapscategorieën</h2>
+          <p class="sub">Vijftien categorieën, van bouwmaterialen tot dienstverleners, samen de hele DIY- en tuinsector.</p>
+        </div>
+      </div>
+      <div class="category-grid reveal-stagger">
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="15" width="7" height="5"/><rect x="9" y="15" width="7" height="5"/><rect x="16" y="15" width="6" height="5"/><rect x="5.5" y="10" width="7" height="5"/><rect x="12.5" y="10" width="7" height="5"/><rect x="2" y="5" width="7" height="5"/><rect x="9" y="5" width="7" height="5"/><rect x="16" y="5" width="6" height="5"/></svg>
+          <span>Bouw en bouwmaterialen</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+          <span>Elektriciteit en verlichting</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>
+          <span>Hout en houtproducten</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2l8 4.6v9.4l-8 4.6-8-4.6V6.6L12 2Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>IJzerwaren</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="10.5" y="2.5" width="3" height="7" rx="1"/><path d="M8 9.5h8l-2 12h-4L8 9.5Z"/></svg>
+          <span>Hand- en elektrische gereedschappen</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3c4 5 6 8.2 6 11a6 6 0 0 1-12 0c0-2.8 2-6 6-11Z"/></svg>
+          <span>Lijmen en kitten</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9h7a6 6 0 0 1 6 6"/><path d="M17 15v3"/><path d="M8 9v11"/><path d="M5 20h6"/></svg>
+          <span>Sanitair</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21V9"/><path d="M12 9C12 5.5 9 3 5 3c0 3.5 3 6.5 7 6.5Z"/><path d="M12 12c0-3 2.5-5 6-5 0 3-2.5 5-6 5Z"/></svg>
+          <span>Tuin (meststoffen, potgrond en planten)</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v18"/><path d="M3 12a9 9 0 0 1 18 0H3Z"/><path d="M9 21a3 3 0 0 0 6 0"/></svg>
+          <span>Tuin (tuinmeubelen en benodigdheden)</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="12" height="6" rx="1.5"/><line x1="16" y1="7" x2="20" y2="7"/><line x1="8" y1="10" x2="8" y2="20"/></svg>
+          <span>Verf en decoratie</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16a8 8 0 0 1 16 0Z"/><rect x="2" y="16" width="20" height="3" rx="1"/></svg>
+          <span>Pbm's (persoonlijke beschermingsmiddelen)</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 2.5h3v3H9z"/><path d="M9 5.5l-1 2v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-12l-1-2"/><line x1="12" y1="2.5" x2="15" y2="0.5"/></svg>
+          <span>Schoonmaak, hygiëne en reinigingsmiddelen</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="9" r="1.6"/><circle cx="12.5" cy="7" r="1.6"/><circle cx="17" cy="9" r="1.6"/><path d="M12.5 12c-3.5 0-6 2.2-6 4.7 0 1.8 1.5 3.3 3.4 3.3.9 0 1.5-.4 2.6-.4s1.7.4 2.6.4c1.9 0 3.4-1.5 3.4-3.3 0-2.5-2.5-4.7-6-4.7Z"/></svg>
+          <span>Dierenvoeding en -benodigdheden</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+          <span>Dienstenleveranciers</span>
+        </div>
+        <div class="category-tile">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17" r="2"/><path d="M7.6 8.3 10.5 15.5M16.4 8.3 13.5 15.5M8 7h8"/></svg>
+          <span>Geassocieerde leden</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <section id="leden">
+      <div class="section-head quiet reveal">
+        <div>
+          <h2>Bedrijven met vol vertrouwen in HIMA Benelux</h2>
+          <p class="sub">Een greep uit de bedrijven die vandaag al lid zijn.</p>
+        </div>
+      </div>
+
+      <div class="member-marquee reveal">
+        <div class="marquee-row">
+          <div class="marquee-track marquee-track--left">
+            <div class="member-item"><img src="assets/leden/deli-home.jpg" alt="Deli Home"></div>
+            <div class="member-item"><img src="assets/leden/kip.png" alt="Kip"></div>
+            <div class="member-item"><img src="assets/leden/coeck.jpg" alt="Coeck"></div>
+            <div class="member-item"><img src="assets/leden/nmc.jpg" alt="nmc"></div>
+            <div class="member-item"><img src="assets/leden/perel.jpg" alt="Perel"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/deli-home.jpg" alt="Deli Home"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/kip.png" alt="Kip"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/coeck.jpg" alt="Coeck"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/nmc.jpg" alt="nmc"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/perel.jpg" alt="Perel"></div>
+          </div>
+        </div>
+        <div class="marquee-row">
+          <div class="marquee-track marquee-track--right">
+            <div class="member-item"><img src="assets/leden/simfofit.jpg" alt="Simfofit"></div>
+            <div class="member-item"><img src="assets/leden/soudal.jpg" alt="Soudal"></div>
+            <div class="member-item"><img src="assets/leden/thau.jpg" alt="Thau"></div>
+            <div class="member-item"><img src="assets/leden/toolland.png" alt="Toolland"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/simfofit.jpg" alt="Simfofit"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/soudal.jpg" alt="Soudal"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/thau.jpg" alt="Thau"></div>
+            <div class="member-item" aria-hidden="true"><img src="assets/leden/toolland.png" alt="Toolland"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <section class="events-section" id="evenementen">
+      <div class="section-head quiet reveal">
+        <div>
+          <h2>Volgende evenementen</h2>
+        </div>
+        <a class="link-arrow" href="evenementen.html">Bekijk alle events <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="event-slider-wrap reveal">
+        <ul class="event-slider" id="event-slider">
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Sep</span><span class="badge-day">24</span><span class="badge-year">2026</span></div>
+              <strong><a href="after-summer-bbq.html">After Summer BBQ met Pascal Coppens</a></strong>
+              <span class="meta">17u00–22u00 · Welvaartstraat 14/1, 2200 Herentals</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="after-summer-bbq.html">Details</a>
+                <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Okt</span><span class="badge-day">09</span><span class="badge-year">2026</span></div>
+              <strong>Retail Ontbijt met Maxeda Platform &amp; Becom</strong>
+              <span class="meta">08u30–13u30 · Welvaartstraat 14/1, 2200 Herentals</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Nov</span><span class="badge-day">20</span><span class="badge-year">2026</span></div>
+              <strong>6th Virtual DIY-Summit</strong>
+              <span class="meta">10u00–13u00 · Online, MS Teams</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Dec</span><span class="badge-day">05</span><span class="badge-year">2026</span></div>
+              <strong>Werkgroep Verpakking &amp; Duurzaamheid</strong>
+              <span class="meta">09u00–12u00 · Welvaartstraat 14/1, 2200 Herentals</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Jan</span><span class="badge-day">14</span><span class="badge-year">2027</span></div>
+              <strong>HIMA Ledendiner</strong>
+              <span class="meta">18u00–22u00 · De Casteleyn, 2000 Antwerpen</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+              </div>
+            </div>
+          </li>
+          <li class="event-card">
+            <div class="event-card-inner">
+              <div class="date-badge"><span class="badge-month">Feb</span><span class="badge-day">04</span><span class="badge-year">2027</span></div>
+              <strong>Trade Talk: Prijszetting in de DIY-sector</strong>
+              <span class="meta">14u00–16u00 · Online, MS Teams</span>
+              <div class="event-card-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Details</a>
+                <a class="btn btn-solid btn-sm event-signup" href="#">Schrijf je nu in</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="slider-nav">
+          <button class="slider-btn" id="event-prev" type="button" aria-label="Vorige evenementen">‹</button>
+          <button class="slider-btn" id="event-next" type="button" aria-label="Volgende evenementen">›</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="cta-band-outer wrap">
+    <div class="orb" aria-hidden="true"></div>
+    <div class="cta-band reveal">
+      <div class="content">
+        <div class="copy">
+          <h2>Word lid en geef je sector eindelijk één stem in de Benelux.</h2>
+          <p class="lede">Toegang tot werkgroepen, marktdata en het volledige HIMA-netwerk — vanaf de dag dat je lid wordt.</p>
+        </div>
+        <div class="action">
+          <a class="btn btn-cta btn-lg" href="lid-worden.html">Word lid</a>
+          <span class="hint">Vrijblijvend gesprek, geen verplichtingen.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="partners-tier-section" id="partners-niveau">
+      <div class="section-head quiet reveal">
+        <div>
+          <h2>Partners per niveau</h2>
+          <p class="sub">Gold, silver en bronze partners, met een aflopend gewicht per niveau.</p>
+        </div>
+      </div>
+      <div class="tier-rows reveal-stagger">
+        <div class="tier-row tier-row--gold">
+          <div class="tier-logo" data-partner="all-fields"><img class="logo-img" src="assets/all-fields.png" alt="All Fields"></div>
+          <span class="tier-badge tier-badge--gold" aria-label="Gold partner">
+            <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.6 1.6 6.8L12 17.6l-6.2 3.3 1.6-6.8L2.2 9.5l6.9-.7L12 2.5Z"/></svg>
+          </span>
+        </div>
+        <div class="tier-row tier-row--silver">
+          <div class="tier-logo" data-partner="katoen-natie"><img class="logo-img" src="assets/katoen-natie.png" alt="Katoen Natie"></div>
+          <div class="tier-logo" data-partner="vizir-group"><img class="logo-img" src="assets/vizir-group.png" alt="Vizir Group (Vizir, Thau, Do It For Me, P3)"></div>
+          <span class="tier-badge tier-badge--silver" aria-label="Silver partner">
+            <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.6 1.6 6.8L12 17.6l-6.2 3.3 1.6-6.8L2.2 9.5l6.9-.7L12 2.5Z"/></svg>
+          </span>
+        </div>
+        <div class="tier-row tier-row--bronze">
+          <div class="tier-logo" data-partner="diy-pro-garden"><img class="logo-img" src="assets/diy-pro-garden.png" alt="DIY Pro & Garden"></div>
+          <div class="tier-logo" data-partner="vrd"><img class="logo-img" src="assets/vrd.jpg" alt="VRD"></div>
+          <span class="tier-badge tier-badge--bronze" aria-label="Bronze partner">
+            <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.6 1.6 6.8L12 17.6l-6.2 3.3 1.6-6.8L2.2 9.5l6.9-.7L12 2.5Z"/></svg>
+          </span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="wrap">
+  <footer id="contact">
+    <div class="footer-in">
+      <div>
+        <a class="brand" href="#main" style="text-decoration:none;">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 100 100">
+              <path d="M20 30 L50 6 L80 30 L80 39 L50 19 L20 39 Z" fill="#ffffff"/>
+              <path d="M22 39 L40 39 L40 55 L60 55 L60 39 L78 39 L78 88 L60 88 L60 65 L40 65 L40 88 L22 88 Z" fill="#ffffff"/>
+            </svg>
+          </span>
+          <span class="brand-word">Home Improvement<br>Manufacturers<br>Association<span class="tag">HIMA Benelux</span></span>
+        </a>
+        <p>Als lid weet je precies wat er speelt in de sector en praat je mee over de richting die HIMA Benelux uitgaat.</p>
+        <a class="btn btn-cta btn-sm" href="lid-worden.html" style="margin-top:1.2rem;">Word lid</a>
+      </div>
+      <div>
+        <h3>Snel navigeren</h3>
+        <ul class="flinks">
+          <li><a href="#">Nuttige links</a></li>
+          <li><a href="#">Nieuws</a></li>
+          <li><a href="evenementen.html">Evenementen</a></li>
+          <li><a href="tier-quiz.html">Tarievenquiz</a></li>
+          <li><a href="#">Intranet</a></li>
+          <li><a href="lid-worden.html">Word lid</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Schrijf je in op onze nieuwsbrief</h3>
+        <form class="newsletter-form" onsubmit="return false;">
+          <div class="field">
+            <label for="nl-voornaam">Voornaam</label>
+            <input id="nl-voornaam" name="voornaam" type="text" autocomplete="given-name" placeholder="Voornaam">
+          </div>
+          <div class="field">
+            <label for="nl-achternaam">Achternaam</label>
+            <input id="nl-achternaam" name="achternaam" type="text" autocomplete="family-name" placeholder="Achternaam">
+          </div>
+          <div class="field">
+            <label for="nl-email">E-mail</label>
+            <input id="nl-email" name="email" type="email" autocomplete="email" placeholder="naam@bedrijf.be" required>
+          </div>
+          <button class="btn btn-solid" type="submit">Versturen</button>
+        </form>
+      </div>
+    </div>
+    <div class="legal-bar">
+      <div><a href="#">Privacybeleid</a><a href="#">Cookiebeleid</a><a href="#">Algemene voorwaarden</a></div>
+      <span class="social"><a href="#" aria-label="HIMA Benelux op LinkedIn">LinkedIn</a><span>webdesign © Sanmax Projects</span></span>
+    </div>
+  </footer>
+</div>
+
+<noscript><style>.reveal, .reveal-stagger > *{opacity:1!important; transform:none!important;}</style></noscript>
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!('IntersectionObserver' in window)) {
+    document.documentElement.classList.add('no-js');
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('reveal-stagger')) {
+          Array.prototype.forEach.call(entry.target.children, function(child){ child.classList.add('is-visible'); });
+        } else {
+          entry.target.classList.add('is-visible');
+        }
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+  Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var nums = document.querySelectorAll('.stat-num');
+  if (!nums.length) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function animate(el){
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduced || !('IntersectionObserver' in window)) { el.textContent = target + suffix; return; }
+    var duration = 1200, start = null;
+    function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.round(ease(p) * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) { animate(entry.target); io.unobserve(entry.target); }
+    });
+  }, {threshold:.4});
+  Array.prototype.forEach.call(nums, function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var slider = document.getElementById('event-slider');
+  var prev = document.getElementById('event-prev');
+  var next = document.getElementById('event-next');
+  if (!slider || !prev || !next) return;
+  function step(){
+    var card = slider.querySelector('.event-card');
+    return card ? card.getBoundingClientRect().width + 24 : slider.clientWidth;
+  }
+  prev.addEventListener('click', function(){ slider.scrollBy({left: -step(), behavior: 'smooth'}); });
+  next.addEventListener('click', function(){ slider.scrollBy({left: step(), behavior: 'smooth'}); });
+})();
+</script>
+<script>
+(async function(){
+  var use = window.claude && window.claude.use;
+  if (!use) return;
+  var db = await use('db').catch(function(){ return null; });
+
+  var tiles = document.querySelectorAll('.tier-logo[data-partner]');
+  function applyLogo(tile, url){
+    var logoImg = tile.querySelector('.logo-img');
+    var ph = tile.querySelector('.logo-placeholder');
+    logoImg.src = url;
+    logoImg.hidden = false;
+    if (ph) ph.hidden = true;
+  }
+  Array.prototype.forEach.call(tiles, async function(tile){
+    var key = tile.getAttribute('data-partner');
+    if (db) {
+      try {
+        var pSnap = await db.doc('content/partner-' + key).get();
+        if (pSnap.exists) {
+          var pData = pSnap.data();
+          if (pData && pData.assetId) applyLogo(tile, '/_blob/' + pData.assetId);
+        }
+      } catch (e) {}
+    }
+  });
+})();
+</script>
